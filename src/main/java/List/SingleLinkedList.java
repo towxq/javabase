@@ -4,7 +4,7 @@ package List;
  * Created by Administrator on 2015/3/20.
  */
 public class SingleLinkedList{
-    private Node head,tail;
+    private Node1 head,tail;
     public SingleLinkedList(){
         head=tail =null;
     }
@@ -19,15 +19,15 @@ public class SingleLinkedList{
         }
     }
     public void addToHead(Object item){//添加头指针 只用一次
-        head = new Node(item);
+        head = new Node1(item);
     }
 
     public void addToTail(Object item){//添加尾指针
         if (!isEmpty()){
-            tail.next=new Node(item);
+            tail.next=new Node1(item);
             tail = tail.next;
         }else{
-            head = tail=new Node(item);
+            head = tail=new Node1(item);
         }
     }
 
@@ -35,21 +35,21 @@ public class SingleLinkedList{
         if (isEmpty()){
             System.out.println("null");
         }else{
-            for(Node p = head;p!=null;p=p.next){
+            for(Node1 p = head;p!=null;p=p.next){
                 System.out.println(p.nodevalue);
             }
         }
     }
 
     public void addFirst(Object item){//表头插入节点  效率高
-        Node newNode = new Node(item);
+        Node1 newNode = new Node1(item);
         newNode.next=head;
         head=newNode;
     }
 
     public void addLast(Object item){//表尾插入节点  效率低
-        Node newNode = new Node(item);
-        Node p = head;
+        Node1 newNode = new Node1(item);
+        Node1 p = head;
         while(p.next!=null){ p=p.next;}
         p.next=newNode;
         newNode.next=null;
@@ -66,7 +66,7 @@ public class SingleLinkedList{
     }
 
     public void removeLast(){//在表尾删除  效率低
-        Node prev = null,curr = head;
+        Node1 prev = null,curr = head;
         while(curr.next!=null){
             prev=curr;
             curr=curr.next;
@@ -77,8 +77,8 @@ public class SingleLinkedList{
     }
 
     public boolean insert(Object app,Object item){//指定的节点添加数据  app是nodevalue item是插入的节点
-        Node prev =head,curr = head.next,newNode;
-        newNode = new Node(item);
+        Node1 prev =head,curr = head.next,newNode;
+        newNode = new Node1(item);
         if (!isEmpty()){
             while((curr!=null)&&(!app.equals(curr.nodevalue))){
                 prev = curr;
@@ -92,7 +92,7 @@ public class SingleLinkedList{
     }
 
     public void remove(Object item){//移除指定的节点
-        Node curr = head,prev = null;
+        Node1 curr = head,prev = null;
         boolean found = false;
         while (curr!=null&&!found){
             if (item.equals(curr.nodevalue)){
@@ -108,7 +108,7 @@ public class SingleLinkedList{
 
     public int indexof(Object item){//返回指定元素的索引
         int index = 0;
-        Node p;
+        Node1 p;
         for(p=head;p!=null;p=p.next){
             if(item.equals(p.nodevalue)){
                 return index;
@@ -134,16 +134,16 @@ public class SingleLinkedList{
 }
 
 
-class Node{
+class Node1{
     Object nodevalue;//数据
-    Node next;//指向下一个节点的引用
+    Node1 next;//指向下一个节点的引用
 
-    Node(Object nodevalue,Node next){
+    Node1(Object nodevalue,Node1 next){
         this.nodevalue=nodevalue;
         this.next=next;
     }
 
-    Node(Object nodevalue){
+    Node1(Object nodevalue){
         this(nodevalue,null);
     }
 }
