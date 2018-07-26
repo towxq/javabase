@@ -1,0 +1,120 @@
+依赖注入（DI）
+    spring最认同的技术就是控制反转的依赖注入模式，控制反转是一个通用的概念，他可以有不同的表达方式，依赖注入仅仅是控制反转的一个具体的列子
+
+    当编写一个复杂的Java应用程序时，应用程序类应该尽可能的独立于其他的Java类，来增加这些类的可重复性，依赖注入有助于将这些类粘合在一起，并保持他们的独立
+
+    到底什么是依赖注入呢？这里的依赖就是转化两个类之间的关联，例如A依赖于B 注入是将B通过IOC注入到A中
+
+    依赖注入的时候可以通过构造函数和setter传递参数
+
+面向方面编程（AOP）
+    spring框架的一个关键的组件，是面向方面的程序设计。一个程序中跨越多个点的功能被称为横切关注点，这些横切点独立于应用程序的业务逻辑。
+    比如  日志记录，声明事务，安全性，缓存等
+    在oop中模块化的关键是是类，在aop中模块化的关键单元是方面，aop帮助你将横切关注点从他们所影响的对象中分离出来，依赖注入帮你将你的应用程序对象中分离出来
+
+核心容器
+    由spring-core，spring-beans，spring-context，spring-context-support和spring-expression
+
+    spring-core模块提供了框架的基本组成部分，包括 IoC 和依赖注入功能。
+
+    spring-beans 模块提供 BeanFactory，工厂模式的微妙实现，它移除了编码式单例的需要，并且可以把配置和依赖从实际编码逻辑中解耦。
+
+    context模块建立在由core和 beans 模块的基础上建立起来的，Context模块继承自Bean模块，并且添加了国际化（比如，使用资源束）、事件传播、资源加载和透明地创建上下文（比如，通过Servelet容器）等功能。Context模块也支持Java EE的功能，比如EJB、JMX和远程调用等。
+
+    ApplicationContext接口是Context模块的焦点。
+
+    spring-context-support提供了对第三方库集成到Spring上下文的支持，比如缓存（EhCache, Guava, JCache）、邮件（JavaMail）、调度（CommonJ, Quartz）、模板引擎（FreeMarker, JasperReports, Velocity）等。
+
+    spring-expression模块提供了强大的表达式语言，用于在运行时查询和操作对象图。它是JSP2.1规范中定义的统一表达式语言的扩展，支持set和get属性值、属性赋值、方法调用、访问数组集合及索引的内容、逻辑算术运算、命名变量、通过名字从Spring IoC容器检索对象，还支持列表的投影、选择以及聚合等。。
+
+IOC容器
+    spring容器是spring的核心，容器将创建对象，把他们连接在一起，配置他们，并管理他们的整个周期，创建到销毁
+    spring容器用依赖注入来管理组成一个应用程序的组件，这些对象被称为spring beans
+
+    spring提供两个不同类型的容器
+    1，Spring BeanFactory容器
+        它是最简单的容器，给 DI 提供了基本的支持，它用 org.springframework.beans.factory.BeanFactory 接口来定义。BeanFactory 或者相关的接口，如 BeanFactoryAware，InitializingBean，DisposableBean，在 Spring 中仍然存在具有大量的与 Spring 整合的第三方框架的反向兼容性的目的。
+
+    2，Spring ApplicationContext容器
+        该容器添加了更多的企业特定的功能，例如从一个属性文件中解析文本信息的能力，发布应用程序事件给感兴趣的事件监听器的能力。该容器是由 org.springframework.context.ApplicationContext 接口定义
+
+Bean定义
+    被称作bean的对象是构成应用程序的支柱也是由spring IOC容易管理的，bean是一个被实例化，组装，并通过spring ioc容器管理的对象，这些bean是由容器提供的配置元数据创建的
+    bean定义包含称为配置元数据的信息
+
+
+    属性	    描述
+    class	        这个属性是强制性的，并且指定用来创建 bean 的 bean 类。
+    name	        这个属性指定唯一的 bean 标识符。在基于 XML 的配置元数据中，你可以使用 ID 和/或 name 属性来指定 bean 标识符。
+    scope	        这个属性指定由特定的 bean 定义创建的对象的作用域
+    constructor-arg	            它是用来注入依赖关系的
+    properties	                它是用来注入依赖关系的
+    autowiring mode	            它是用来注入依赖关系的
+    lazy-initialization mode	延迟初始化的 bean 告诉 IoC 容器在它第一次被请求时，而不是在启动时去创建一个 bean 实例。
+    initialization方法	        在 bean 的所有必需的属性被容器设置之后，调用回调方法。它将会在 bean 的生命周期章节中进行讨论。
+    destruction方法	            当包含该 bean 的容器被销毁时，使用回调方法
+
+
+spring配置元数据
+    spring ioc容器完全由实际编写的元数据的格式解耦，有下面三个重要的方法把配置元数据提供给Spring容器
+        基于xml的配置文件
+        基于注解的配置
+        基于Java的配置
+
+
+Bean的作用域
+    作用域	            描述
+    singleton	     在spring IoC容器仅存在一个Bean实例，Bean以单例方式存在，默认值
+    prototype	     每次从容器中调用Bean时，都返回一个新的实例，即每次调用getBean()时，相当于执行newXxxBean()
+    request	         每次HTTP请求都会创建一个新的Bean，该作用域仅适用于WebApplicationContext环境
+    session	         同一个HTTP Session共享一个Bean，不同Session使用不同的Bean，仅适用于WebApplicationContext环境
+    global-session	    一般用于Portlet应用环境，改作用于仅适用于WebApplicationContext环境
+
+Bean生命周期
+    理解spring bean的生命周期很容易，当一个bean被实例化时，他可能需要执行一些初始化使它转成可用状态，不需要时从容器中移除。可能需要一些清楚工作
+
+Bean的自动装配
+    Spring容器可以在不使用构造注入和setter的情况下自动装配相互协作的bean之间的关系，有助于减少编写xml配置的数量  用autowrite属性定义自动装配模式
+    模式	    描述
+    no	        这是默认的设置，它意味着没有自动装配，你应该使用显式的bean引用来连线。你不用为了连线做特殊的事
+    byName	    由属性名自动装配。Spring 容器看到在 XML 配置文件中 bean 的自动装配的属性设置为 byName。然后尝试匹配，并且将它的属性与在配置文件中被定义为相同名称的 beans 的属性进行连接。
+    byType	    由属性数据类型自动装配。Spring 容器看到在 XML 配置文件中 bean 的自动装配的属性设置为 byType。然后如果它的类型匹配配置文件中的一个确切的 bean 名称，它将尝试匹配和连接属性的类型。如果存在不止一个这样的 bean，则一个致命的异常将会被抛出。
+    constructor	   类似于 byType，但该类型适用于构造函数参数类型。如果在容器中没有一个构造函数参数类型的 bean，则一个致命错误将会发生。
+    autodetect	   Spring首先尝试通过 constructor 使用自动装配来连接，如果它不执行，Spring 尝试通过 byType 来自动装配。
+
+    自动装配的局限性
+    当自动装配在同一个项目中使用时，他的效果最好，如果通常不使用自动装配，它可能会使开发人员混淆的使用它来连接只有一个或两个 bean 定义。不过，自动装配可以显著减少需要指定的属性或构造器参数，但你应该在使用它们之前考虑到自动装配的局限性和缺点
+    限制	            描述
+    重写的可能性	        你可以使用总是重写自动装配的 <constructor-arg>和 <property> 设置来指定依赖关系。
+    原始数据类型	        你不能自动装配所谓的简单类型包括基本类型，字符串和类。
+    混乱的本质	            自动装配不如显式装配精确，所以如果可能的话尽可能使用显式装配。
+
+Spring 基于注解的配置
+    <context:annotation-config/>
+
+    @Required 注解应用于 bean 属性的 setter 方法。
+    @Autowired 注解可以应用到 bean 属性的 setter 方法，非 setter 方法，构造函数和属性。
+
+Spring的AOP
+    项	            描述
+    Aspect	            一个模块具有一组提供横切需求的 APIs。例如，一个日志模块为了记录日志将被 AOP 方面调用。应用程序可以拥有任意数量的方面，这取决于需求。
+    Join point	        在你的应用程序中它代表一个点，你可以在插件 AOP 方面。你也能说，它是在实际的应用程序中，其中一个操作将使用 Spring AOP 框架。
+    Advice	            这是实际行动之前或之后执行的方法。这是在程序执行期间通过 Spring AOP 框架实际被调用的代码。
+    Pointcut	        这是一组一个或多个连接点，通知应该被执行。你可以使用表达式或模式指定切入点正如我们将在 AOP 的例子中看到的。
+    Introduction	    引用允许你添加新方法或属性到现有的类中。
+    Target object	    被一个或者多个方面所通知的对象，这个对象永远是一个被代理对象。也称为被通知对象。
+    Weaving	Weaving     把方面连接到其它的应用程序类型或者对象上，并创建一个被通知的对象。这些可以在编译时，类加载时和运行时完成。
+
+通知的类型
+    通知	        描述
+    前置通知	        在一个方法执行之前，执行通知。
+    后置通知	        在一个方法执行之后，不考虑其结果，执行通知。
+    返回后通知	        在一个方法执行之后，只有在方法成功完成时，才能执行通知。
+    抛出异常后通知	    在一个方法执行之后，只有在方法退出抛出异常时，才能执行通知。
+    环绕通知	        在建议方法调用之前和之后，执行通知。
+
+Spring事务管理
+        编程式事务       你在编程的帮助下有管理事务。这给了你极大的灵活性，但却很难维护
+        声明是事务       你从业务代码中分离事务管理。你仅仅使用注释或 XML 配置来管理事务
+
+Spring 使用 Log4J 记录日志

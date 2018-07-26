@@ -8,6 +8,9 @@
            http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd
            http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd">
     <aop:aspectj-autoproxy/>
-    <bean id="myInterceptor" class="aop.MyInterceptor"/>
-    <bean id="personService" class="aop.PersonServiceBean"></bean>
+
+    <bean id="messagedemo" class="spring.DemoMessage" scope="singleton">
+        <property name="messgae" value="wxqwxqwxq"></property>
+    </bean>
+
 </beans>

@@ -1,3 +1,7 @@
+package redis;
+
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import redis.clients.jedis.Jedis;
 
 import java.io.*;
@@ -11,18 +15,32 @@ public class redisdemo {
         // System.out.println("connection to server success");
         // System.out.println("Server is running "+jedis.ping());
 
-        Jedis jedis = new Jedis("localhost");
-        System.out.println("connection to server success");
+//        Jedis jedis = new Jedis("192.168.78.128:6379");
+//        System.out.println("connection to server success");
+//        persion p = new persion();
+//        p.setId("wxq");
+//        p.setAge("255");
+//        byte[] b= SerializeUtil.serialize(p);
+//        jedis.set("wxq".getBytes(), b);
+//        jedis.set("wxqwxq", "asdf");
+//        //jedis.del("wxq");
+//        persion p1 = (persion) SerializeUtil.unserialize(jedis.get("wxq".getBytes()));
+//        System.out.println("redis:"+p1.getId()+":"+p1.getAge());
+//        System.out.println("****"+jedis.get("wxqwxq"));
+
+        ApplicationContext applicationContext = new ClassPathXmlApplicationContext("classpath:/redis.xml");
+        WriteRedisService writeRedisService = (WriteRedisService) applicationContext.getBean("WriteRedisService");
+        ReadRedisService readRedisService = (ReadRedisService) applicationContext.getBean("ReadRedisService");
+        writeRedisService.set("aaa","wxq");
         persion p = new persion();
         p.setId("wxq");
         p.setAge("255");
-        byte[] b= SerializeUtil.serialize(p);
-        jedis.set("wxq".getBytes(), b);
-        jedis.set("wxqwxq", "asdf");
-        //jedis.del("wxq");
-        persion p1 = (persion) SerializeUtil.unserialize(jedis.get("wxq".getBytes()));
+        writeRedisService.set("bbb",p);
+        String ss = readRedisService.get("aaa");
+        persion p1 = readRedisService.get("bbb",persion.class);
+        System.out.println(ss);
         System.out.println("redis:"+p1.getId()+":"+p1.getAge());
-        System.out.println("****"+jedis.get("wxqwxq"));
+
     }
 }
 
