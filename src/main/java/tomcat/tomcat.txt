@@ -1,0 +1,6 @@
+tomcat中最顶层的容器是server，代表整个服务器，server中包含至少一个service，用具具体服务，service主要包含connector和container
+    connector用于处理连接相关的事情，并提供socket与request，reponse的转换
+    container用于封装和管理servlet，以及具体的request请求
+一个Tomcat中只有一个server，一个server可以包含多个service，一个service只有一个container，但可以有多个connectors(因为一个服务可以有多个连接，同时提供
+http和https连接，也可以提供相同协议的不同接口的连接)
+

@@ -8,6 +8,7 @@ public class 单例设计模式 {
 }
 
 class Single{
+    //线程安全
     private static final Single s = new Single();
     private Single(){}
     public static Single getInstance(){

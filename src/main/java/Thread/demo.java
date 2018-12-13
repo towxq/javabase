@@ -45,12 +45,12 @@ public class demo {
 //		d1.start();
 //		d2.start();
 
-        demo3 d3 = new demo3("aa");
-        demo3 d4 = new demo3("bb");
-        Thread t1 = new Thread(d3);
-        Thread t2 = new Thread(d4);
-        t1.start();
-        t2.start();
+//        demo3 d3 = new demo3("aa");
+//        demo3 d4 = new demo3("bb");
+//        Thread t1 = new Thread(d3);
+//        Thread t2 = new Thread(d4);
+//        t1.start();
+//        t2.start();
 
     }
 }
@@ -95,4 +95,45 @@ class demo3 implements Runnable{
         }
     }
 
+}
+
+
+
+class TicketWindow extends Thread{
+
+    private final String name;
+
+    private static final int MAX = 50;
+
+    private static int index  = 1;
+
+    private final static Object MUTEX = new Object();
+
+    public TicketWindow(String name){
+        this.name = name;
+    }
+
+    public void run(){
+        synchronized (MUTEX){
+            while(index<=MAX){
+                System.out.println("柜台："+name+" 当前号码： "+index++);
+            }
+        }
+    }
+
+    public static void main(String[] args){
+        TicketWindow ticketWindow1 = new TicketWindow("一号");
+        TicketWindow ticketWindow2 = new TicketWindow("二号");
+        TicketWindow ticketWindow3 = new TicketWindow("三号");
+        TicketWindow ticketWindow4 = new TicketWindow("四号");
+        ticketWindow1.start();
+        try {
+            ticketWindow1.wait();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        ticketWindow2.start();
+        ticketWindow3.start();
+        ticketWindow4.start();
+    }
 }
