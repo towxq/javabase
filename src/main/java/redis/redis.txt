@@ -41,7 +41,7 @@ Redis
                 lpop list-key-name
 
 
-         set(集合)   string类型的无序集合 集合可以通过哈希表实现
+         set(基础知识.集合)   string类型的无序集合 集合可以通过哈希表实现
             sadd 将给定的元素添加到集合
                 sadd set-key value
             smembers 返回集合包含的所有元素
