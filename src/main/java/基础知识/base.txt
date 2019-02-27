@@ -54,6 +54,8 @@ this总指向该方法的对象
 局部变量  方法定义的变量
 成员变量分为 类变量和实例变量 static修饰类变量
 
+枚举 实例有限且固定的类
+
 访问级别
 private-->default-->protected-->public
 

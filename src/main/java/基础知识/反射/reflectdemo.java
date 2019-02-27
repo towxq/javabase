@@ -18,6 +18,7 @@ public class reflectdemo {
 		getClassObject_1();
 		getClassObject_2();
 		getClassObject_3();
+
 	}
 	/*
 	 * 方式三：
@@ -44,7 +45,7 @@ public class reflectdemo {
 	private static void getClassObject_2() {
 		Class clazz  = Person.class;
 		Class clazz1 = Person.class;
-		System.out.println(clazz=clazz1);
+		System.out.println(clazz==clazz1);
 
 	}
 	/*
@@ -61,9 +62,19 @@ public class reflectdemo {
 		Person p1 = new Person();
 		Class clazz1 = p1.getClass();
 
-		System.out.println(clazz==clazz1);
+		System.out.println(clazz==clazz1);//true
+//		一个类在JVM中只会有一个Class实例
 
 	}
 
 
 }
+//　        getName()：获得类的完整名字。
+//		　　getFields()：获得类的public类型的属性。
+//		　　getDeclaredFields()：获得类的所有属性。包括private 声明的和继承类
+//		　　getMethods()：获得类的public类型的方法。
+//		　　getDeclaredMethods()：获得类的所有方法。包括private 声明的和继承类
+//		　　getMethod(String name,Class[]parameterTypes)：获得类的特定方法，name参数指定方法的名字，parameterTypes 参数指定方法的参数类型。
+//		　　getConstructors()：获得类的public类型的构造方法。
+//		　　getConstructor(Class[]parameterTypes)：获得类的特定构造方法，parameterTypes 参数指定构造方法的参数类型。
+//		　　newInstance()：通过类的不带参数的构造方法创建这个类的一个对象。
