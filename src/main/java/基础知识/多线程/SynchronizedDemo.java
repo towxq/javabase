@@ -21,11 +21,33 @@ public class SynchronizedDemo  implements Runnable{
         }
     }
 }
-//synchronized关键字提供一种独占式的加锁对象，用来控制多个线程对共享资源的互斥访问，他可以保证在同一时刻只有一个线程在执行该段代码
-//同时保证共享变量的内存访问性
-//    互斥性：同一时刻只允许一个线程持有某个对象锁，一次实现对共享资源的互斥访问
-//    可见性：确保在锁释放前，对共享变量做的修改，对随后获得锁的另一个线程是可见的
+//volatile和synchronized的区别
+//    1，使用上的区别
+//        a,volatile关键字只能用于修饰实例变量或者类变量，不能修饰方法以及方法参数和局部变量，常量等
+//        b,synchronized关键字不能用于对变量的修饰，只能用于修饰方法或者语句块
+//        c, volatile修饰的变量可以为null  synchronized关键字同步语句块的monitor的对象不能为null
+//    2,对原子性的保证
+//        a,volatile无法保证原子性
+//        b,由于synchronized是一种排他的机制，因此被synchronized关键字修饰的同步代码是无法被中途打断的，因此能够保证代码的原子性
+//    3,对可见性的保证
+//        a,两者均可以保证共享资源在多线程的可见性，但实现机制不同
+//        b,synchronized借助于jvm指令monitor enter和monitor exit对通过排他的方式使得同步代码串行化，在monitor exit时所有共享资源将会被刷新到主内存中
+//        c,相比与synchronized关键字，volatile使用机器指令（偏硬件） “lock” 的方式迫使其他线程工作内存中的数据失败，不得到主内存中进行再次加载
+//    4,对有序性的保证
+//        a,volatile关键字禁止JVM编译器以及处理器对其进行重排序，所以它能够保证有序性
+//        b,虽然synchronized关键字所修饰的同步方法也可以保证顺序性，但是这种顺序是以程序的串行化执行换来的
+//    5，其他
+//        a,volatile不会使线程陷入阻塞
+//        b,synchronized关键字会使线程进入阻塞
+
+
+//    1,synchronized关键字提供一种锁的机制，能够保证共享变量的互斥访问，从而防止数据不一致的问题
+//    2,synchronized关键字包括moniter enter和monitor exit 两个JVM命令，能够保证在任何时候任何线程执行到monitor enter成功之前都必须从主内存
+//        中获取数据，而不是从缓存中，在monitor exit运行成功后，共享变量被更新后的值必须刷入主内存
+//    3synchronized的指令严格遵守java happens-before规则，一个monitor exit之前必要有一个monitor enter
 //
+//    synchronized提供一种互斥机制，也就是在同一时刻，只能有一个线程访问同步资源，
+
 //synchronized的获取和释放锁由jvm实现，用户不需要显示的获取和释放锁，非常方便，但是当线程尝试获取锁的时候，获取不到就会一直阻塞
 //同步代码块
 //    锁的是指定对象实例

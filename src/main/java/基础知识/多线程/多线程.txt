@@ -89,8 +89,11 @@ Public synchronized void methodAAA()
 线程数量 = （最大地址空间（MAXProcessMemory）-JVM内存-ReservedOsMemory(系统保留内存)）/ThreadStackSize(XSS)
 
 守护线程  正常情况下，若JVM中没有一个非守护线程，则JVM的进程退出
+    守护线程具备自动结束生命周期的特性，而非守护线程则不具备这个特点。守护线程经常用作执行一些后台任务
 
-synchronized 可以实现一个简单的策略来防止线程干扰和内存一致性错误
+进程假死
+    假死的进程虽然存在，但是没有日志的输出，不进行任何作业，之所以出现这个情况，是因为某个线程阻塞了，或者线程死锁
+
 
 程序死锁
 1，交叉锁可导致程序出现死锁
