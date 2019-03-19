@@ -413,4 +413,11 @@ zookeeper、dubbo,etcd、springcloud微服务原理、kafka，activeMQ，rocketM
 多线程 高并发 问的是最多的
 
 
-
+商品30万
+6000万  60万单
+线上 800多万  4万单
+58万会员
+付费会员4000
+线上周转 70
+门店周转  80
+卖的最多的是 酒
