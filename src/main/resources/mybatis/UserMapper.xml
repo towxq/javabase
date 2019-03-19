@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mybatis.UserMapper">
+    <resultMap id="userMap" type="mybatis.SysUser">
+        <result property="id" column="id"/>
+        <result property="userName" column="user_name"/>
+        <result property="userPassword" column="user_password"/>
+        <result property="userEmail" column="user_email"/>
+        <result property="userInfo" column="user_info"/>
+        <result property="beadImg" column="head_img" jdbcType="BLOB"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <select id="selectById" resultMap="userMap">
+        select * from sys_user where id = #{id}
+    </select>
+
+    <select id="selectAll" resultMap="userMap">
+        select id,user_name,user_password,user_email,user_info,head_img,create_time from sys_user
+    </select>
+
+    <select id="selectbyUserName" resultMap="userMap">
+        select * from sys_user
+        <if test="userName!=null and userName!=''">
+           where user_name  = #{userName}
+        </if>
+    </select>
+
+    <insert id="insertUser" parameterType="mybatis.SysUser">
+        insert into sys_user(id,user_name,user_password,user_email,user_info,head_img,create_time) VALUES
+        (
+          #{id},#{userName},#{userPassword},#{userEmail},#{userInfo},#{beadImg},#{createTime}
+        )
+    </insert>
+</mapper>

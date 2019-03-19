@@ -341,3 +341,13 @@ CAS原理内存模型、GC垃圾回收，包括分代，GC算法，收集器、�
 Java8相关、序列化 servlet、cookie session、Spring AOP、IOC、MVC、事务、动态代理、Mybatis、Tomcat、Hibernate等等相关知识服务发现、治理等，
 zookeeper、dubbo,etcd、springcloud微服务原理、kafka，activeMQ，rocketMQ
 多线程 高并发 问的是最多的
+
+
+商品30万
+6000万  60万单
+线上 800多万  4万单
+58万会员
+付费会员4000
+线上周转 70
+门店周转  80
+卖的最多的是 酒
