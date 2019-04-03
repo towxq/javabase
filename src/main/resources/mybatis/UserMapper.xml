@@ -10,6 +10,42 @@
         <result property="userInfo" column="user_info"/>
         <result property="beadImg" column="head_img" jdbcType="BLOB"/>
         <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <!--<result property="sysRole.id" column="id"/>-->
+        <!--<result property="sysRole.roleName" column="role_name"/>-->
+        <!--<result property="sysRole.enabled" column="enabled"/>-->
+        <!--<result property="sysRole.createby" column="create_by"/>-->
+        <!--<result property="sysRole.createTime" column="create_time"/>-->
+        <!--<collection property="sysRoleList" columnPrefix="role_" javaType="mybatis.SysRole" >-->
+            <!--<result property="id" column="id"/>-->
+            <!--<result property="roleName" column="role_name"/>-->
+            <!--<result property="enabled" column="enabled"/>-->
+            <!--<result property="createby" column="create_by"/>-->
+            <!--<result property="createTime" column="create_time"/>-->
+        <!--</collection>-->
+    </resultMap>
+
+    <resultMap id="roleMap" extends="userMap" type="mybatis.SysUser">
+        <result property="sysRole.id" column="id"/>
+        <result property="sysRole.roleName" column="role_name"/>
+        <result property="sysRole.enabled" column="enabled"/>
+        <result property="sysRole.createby" column="create_by"/>
+        <result property="sysRole.createTime" column="create_time"/>
+    </resultMap>
+
+    <resultMap id="roleMap2" type="mybatis.SysRole">
+        <result property="id" column="id"/>
+        <result property="roleName" column="role_name"/>
+        <result property="enabled" column="enabled"/>
+        <result property="createby" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+    </resultMap>
+
+    <resultMap id="userRoleMap" extends="userMap" type="mybatis.SysRole">
+        <association property="sysRole" resultMap="roleMap2"></association>
+    </resultMap>
+
+    <resultMap id="userRoleListMap" extends="userMap" type="mybatis.SysRole">
+        <collection property="sysRoleList" resultMap="roleMap2" columnPrefix="role_"></collection>
     </resultMap>
 
     <select id="selectById" resultMap="userMap">
@@ -22,9 +58,116 @@
 
     <select id="selectbyUserName" resultMap="userMap">
         select * from sys_user
-        <if test="userName!=null and userName!=''">
-           where user_name  = #{userName}
-        </if>
+        <where>
+            <if test="userName!=null and userName!=''">
+                and user_name = #{userName}
+            </if>
+            <if test="userEmail!=null and userEmail!=''">
+                and user_email = #{userEmail}
+            </if>
+        </where>
+    </select>
+
+    <select id="selectByIdOrderUserName" resultMap="userMap">
+        select id,user_name,user_password,user_email,user_info,head_img,create_time from sys_user
+        where 1=1
+        <choose>
+            <when test="id!=null">
+                and id=#{id}
+            </when>
+            <when test="userName!=null and userNmae!=''">
+                and user_name = UserName
+            </when>
+            <otherwise>
+                and 1 =2
+            </otherwise>
+        </choose>
+    </select>
+
+    <select id="selectByIdList" resultMap="userMap">
+        select id,user_name,user_password,user_email,user_info,head_img,create_time from sys_user
+        where id in
+        <foreach collection="list" open="(" close=")" separator="," item="id" index="i">
+            #{id}
+        </foreach>
+    </select>
+
+    <select id="selectUserAndRoleById" resultType="mybatis.SysUser">
+        select
+        u.id id,
+        u.user_name userName,
+        u.user_password userPassword,
+        u.user_email userEmail,
+        u.user_info userInfo,
+        u.head_img beadImg,
+        u.create_time createTime,
+        r.id "sysRole.id",
+        r.role_name "sysRole.roleName",
+        r.enabled "sysRole.enabled",
+        r.create_by "sysRole.createby",
+        r.create_time "sysRole.createTime"
+        from sys_user u
+        inner join sys_user_role ur on u.id = ur.user_id
+        inner join sys_role r on u.id = r.id
+        where u.id = #{id}
+    </select>
+
+    <select id="selectUserAndRoleById2" resultMap="userRoleMap">
+            SELECT u.id id,
+             u.user_name,
+             u.user_password,
+             u.user_email,
+             u.user_info,
+             u.head_img,
+             u.create_time,
+             r.id,
+             r.role_name,
+             r.enabled,
+             r.create_by,
+             r.create_time FROM sys_user u
+             INNER JOIN sys_user_role ur ON u.id = ur.user_id
+             INNER JOIN sys_role r ON r.id = ur.role_id
+             WHERE u.id = #{id}
+    </select>
+
+    <select id="selectUserAndRoleById3" resultType="mybatis.SysUser">
+        SELECT
+            u.id id,
+            u.user_name userName,
+            u.user_password userPassword,
+            u.user_email userEmail,
+            u.user_info userInfo,
+            u.head_img beadImg,
+            u.create_time createTime,
+             r.id role_id,
+             r.role_name role_roleName,
+             r.enabled role_enabled,
+             r.create_by role_createby,
+             r.create_time role_createTime
+             FROM sys_user u
+             INNER JOIN sys_user_role ur ON u.id = ur.user_id
+             INNER JOIN sys_role r ON r.id = ur.role_id
+             WHERE u.id = #{id}
+    </select>
+
+    <select id="selectUserAndRoleById4" resultMap="userRoleListMap">
+         SELECT
+            u.id,
+            u.user_name,
+            u.user_password,
+            u.user_email,
+            u.user_info,
+            u.head_img,
+            u.create_time,
+             r.id role_id,
+             r.role_name role_role_name,
+             r.enabled role_enabled,
+             r.create_by role_create_by,
+             r.create_time role_create_time
+             FROM sys_user u
+             INNER JOIN sys_user_role ur ON u.id = ur.user_id
+             INNER JOIN sys_role r ON r.id = ur.role_id
+             WHERE u.id = #{id}
     </select>
 
     <insert id="insertUser" parameterType="mybatis.SysUser">
@@ -33,4 +176,38 @@
           #{id},#{userName},#{userPassword},#{userEmail},#{userInfo},#{beadImg},#{createTime}
         )
     </insert>
+
+    <insert id="insertUserList" parameterType="mybatis.SysUser">
+        insert into sys_user(user_name,user_password,user_email,user_info,head_img,create_time) VALUES
+        <foreach collection="list" item="user" separator=",">
+            (
+            #{user.userName},#{user.userPassword},#{user.userEmail},#{user.userInfo},#{user.beadImg},#{user.createTime}
+            )
+        </foreach>
+    </insert>
+
+    <update id="updateById">
+        update sys_user
+        <set>
+            <if test="userName!=null and userName!=''">
+                user_name = #{userName},
+            </if>
+            <if test="userPassword!=null and userPassword!=''">
+                user_password = #{userPassword},
+            </if>
+            <if test="userEmail!=null and userEmail!=''">
+                user_email = #{userEmail},
+            </if>
+            <if test="userInfo!=null and userInfo!=''">
+                user_info = #{userInfo},
+            </if>
+            <if test="beadImg!=null and beadImg!=''">
+                head_img = #{beadImg},
+            </if>
+            <if test="createTime!=null and createTime!=''">
+                create_time = #{createTime},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
 </mapper>
