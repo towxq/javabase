@@ -70,6 +70,7 @@ class Z implements Comparable{//定制排序
 //    3,集合元素可以是空
 
 
+
 //LinkedHashSet HashSet还有个子类LinkedHashSet,根据元素的hashCode来决定元素的存储位置，同时使用链表维护元素的次序，可以以插入顺序保存，性能略低于HashSet
 
 
@@ -97,4 +98,6 @@ class Z implements Comparable{//定制排序
 //
 //对于一般的场景  使用HashMap，因为HashMap正是为快速查询设计的（HashMap底层其实也是采用的数组来存储k-v）如果程序需要一个总是排好序的Map时，则使用TreeMap
 //LinkedHashMap比HashMap慢一点，因为它需要维护链表来保持Map中的k-v的添加顺序
-
+//
+//Hashmap不是同步的
+//HashMap是一个链表散列，即数组和链表的结合体
