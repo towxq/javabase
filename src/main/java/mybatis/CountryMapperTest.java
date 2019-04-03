@@ -4,6 +4,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -16,13 +17,23 @@ public class CountryMapperTest extends BaseMapperTest{
 //            List<SysUser> sysUsers = userMapper.selectAll();
 //            printList(sysUsers);
 
+//            List<Long> strings = new ArrayList<Long>();
+//            strings.add(1L);
+//            strings.add(2L);
+//            List<SysUser> sysUsers = userMapper.selectByIdList(strings);
+//            printList(sysUsers);
+
 //            SysUser sysUser = userMapper.selectById(1L);
 //            System.out.println(sysUser.getId()+"---"+sysUser.getUserName()+"---"+sysUser.getUserPassword());
 
-            SysUser user = new SysUser();
-            user.setUserName("admin");
-            SysUser sysUser = userMapper.selectbyUserName(user);
-            System.out.println(sysUser.getId()+"---"+sysUser.getUserName()+"---"+sysUser.getUserPassword());
+            List<SysUser> sysUser = userMapper.selectUserAndRoleById3(1L);
+            printList(sysUser);
+
+//            SysUser user = new SysUser();
+//            user.setUserName("admin");
+//            user.setUserEmail("asdasd@qq.com");
+//            SysUser sysUser = userMapper.selectbyUserName(user);
+//            System.out.println(sysUser.getId()+"---"+sysUser.getUserName()+"---"+sysUser.getUserPassword());
 
 //                SysUser user = new SysUser();
 //                user.setId(2L);
@@ -33,6 +44,34 @@ public class CountryMapperTest extends BaseMapperTest{
 //                user.setBeadImg("asdasd".getBytes());
 //                user.setCreateTime(new Date());
 //                int result = userMapper.insertUser(user);
+//                sqlSession.commit();
+//                System.out.println(result);
+
+//                    SysUser sysUser = new SysUser();
+//                    sysUser.setId(2L);
+//                    sysUser.setUserEmail("asdadssa@qq.com");
+//                    sysUser.setUserPassword("aabbcc");
+//                    int result = userMapper.updateById(sysUser);
+//                    sqlSession.commit();
+
+//                SysUser user = new SysUser();
+//                user.setUserName("wxq");
+//                user.setUserPassword("2312312");
+//                user.setUserEmail("wxawdaw12@122.com");
+//                user.setUserInfo("sadsadasdad12121");
+//                user.setBeadImg("12213123223123".getBytes());
+//                user.setCreateTime(new Date());
+//                SysUser user1 = new SysUser();
+//                user1.setUserName("wxq1");
+//                user1.setUserPassword("3534534543");
+//                user1.setUserEmail("wxawdaw@sina.com");
+//                user1.setUserInfo("324452324234dsfsdfsf");
+//                user1.setBeadImg("asd234232434asd".getBytes());
+//                user1.setCreateTime(new Date());
+//                List<SysUser> sysUsers = new ArrayList<SysUser>();
+//                sysUsers.add(user);
+//                sysUsers.add(user1);
+//                int result = userMapper.insertUserList(sysUsers);
 //                sqlSession.commit();
 //                System.out.println(result);
         }finally {

@@ -1,6 +1,7 @@
 package mybatis;
 
 import java.util.Date;
+import java.util.List;
 
 public class SysUser {
     private Long id;
@@ -10,6 +11,9 @@ public class SysUser {
     private String userInfo;
     private byte[] beadImg;
     private Date createTime;
+//    private SysRole sysRole;
+
+    private List<SysRole> sysRoleList;
 
     public Long getId() {
         return id;
@@ -66,4 +70,20 @@ public class SysUser {
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
     }
+
+    public List<SysRole> getSysRoleList() {
+        return sysRoleList;
+    }
+
+    public void setSysRoleList(List<SysRole> sysRoleList) {
+        this.sysRoleList = sysRoleList;
+    }
+
+//    public SysRole getSysRole() {
+//        return sysRole;
+//    }
+//
+//    public void setSysRole(SysRole sysRole) {
+//        this.sysRole = sysRole;
+//    }
 }
