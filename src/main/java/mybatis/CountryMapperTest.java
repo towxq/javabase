@@ -13,7 +13,8 @@ public class CountryMapperTest extends BaseMapperTest{
     public void testSelectAll(){
         SqlSession sqlSession = getSqlSession();
         try{
-            UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
+//            UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
+//              ArticleMapper articleMapper = sqlSession.getMapper(ArticleMapper.class);
 //            List<SysUser> sysUsers = userMapper.selectAll();
 //            printList(sysUsers);
 
@@ -26,8 +27,8 @@ public class CountryMapperTest extends BaseMapperTest{
 //            SysUser sysUser = userMapper.selectById(1L);
 //            System.out.println(sysUser.getId()+"---"+sysUser.getUserName()+"---"+sysUser.getUserPassword());
 
-            List<SysUser> sysUser = userMapper.selectUserAndRoleById3(1L);
-            printList(sysUser);
+//            List<SysUser> sysUser = userMapper.selectUserAndRoleById3(1L);
+//            printList(sysUser);
 
 //            SysUser user = new SysUser();
 //            user.setUserName("admin");
@@ -74,6 +75,19 @@ public class CountryMapperTest extends BaseMapperTest{
 //                int result = userMapper.insertUserList(sysUsers);
 //                sqlSession.commit();
 //                System.out.println(result);
+
+
+            UserDemoMapper um = sqlSession.getMapper(UserDemoMapper.class);
+            // 调用selectUserById方法
+            User user = um.selectUserById(1);
+            // 查看查询到的user对象信息
+            System.out.println(user.getId() + " " + user.getUsername());
+            // 查看user对象关联的订单信息
+            List<Order> orders = user.getOrders();
+            for (Order order : orders)
+            {
+                System.out.println(order.toString());
+            }
         }finally {
             sqlSession.close();
         }

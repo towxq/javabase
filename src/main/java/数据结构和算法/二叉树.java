@@ -1,7 +1,5 @@
 package 数据结构和算法;
 
-import sun.reflect.generics.tree.Tree;
-
 public class 二叉树 {
     public static void main(String[] args){
         myTree myTree = new myTree();
@@ -44,7 +42,6 @@ class TreeNode{
         this.val = val;
     }
 }
-
 
 class myTree{
 

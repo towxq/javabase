@@ -29,7 +29,7 @@ public class 代理设计模式 {
         proxyclass.buy_mycar();
     }
 }
-
+//为其他对象提供一种代理可以控制这个对象的访问
 //买车接口
 interface buy_car{
     public void buy_mycar();

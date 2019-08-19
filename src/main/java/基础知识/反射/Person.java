@@ -23,6 +23,7 @@ public class Person {
 	private void privateMethod(){
 		System.out.println("method run!");
 	}
+
 	public void paramMethod(String str,int num){
 		System.out.println("paramMethod run ---"+str+":"+num);
 	}

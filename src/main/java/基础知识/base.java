@@ -1,5 +1,7 @@
 package 基础知识;
 
+import java.util.concurrent.ExecutorService;
+
 public class base {
     public static void main(String[] args){
         float af = 5.234556f;
@@ -25,6 +27,52 @@ public class base {
             System.out.println("-----"+s);
         }
         new EnumTest().judge(SeasonEnum.SPRING);
+
+        String s = "wxq";
+        String ss = "wxq";
+        String s1 = new String("wxq");
+        String ss1 = new String("wxq");
+        System.out.println(s==ss);
+        System.out.println(s1==ss1);
+
+        String as = "xiaomeng2";
+        final String bs = "xiaomeng";
+        String ds = "xiaomeng";
+        String cs = bs + 2;
+        String es = ds + 2;
+        System.out.println((as == cs));
+        System.out.println((as == es));
+
+        peo peo1 = new peo("abc",18);
+        peo peo2 = new peo("wxq",27);
+        System.out.println(peo1.getName()+"--"+peo1.getAge());
+        System.out.println(peo.i);
+        peo.i = 0;
+        System.out.println(peo.i);
+        change(peo1,peo2);
+        System.out.println(peo2.getName());
+
+        System.out.println(trycatchdemo());
+
+        peo peo = new peo();
+        System.out.println(peo.getName()+"--"+peo.getAge());
+        System.out.println(1 << 2);
+    }
+
+    public static void change(peo p,peo p2){
+        p2.setName(p.getName());
+    }
+
+    static int trycatchdemo(){
+        try{
+            System.out.println(2);
+            return 2;
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            System.out.println(3);
+            return 3;
+        }
     }
 }
 
@@ -70,5 +118,45 @@ class EnumTest{
                 break;
 
         }
+    }
+}
+
+final class peo{
+    static int i = 9;
+    private String name;
+    private Integer age;
+
+    static{
+        System.out.println("static chushihua  --"+i);
+        i = 1;
+        System.out.println("static chushihua  "+i);
+    }
+
+    {
+        name = "wxq123";
+        age = 123;
+        System.out.println("chushihua");
+    }
+    peo(){}
+    peo(String  name,Integer age){
+        this.name = name;
+        this.age = age;
+
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Integer getAge() {
+        return age;
+    }
+
+    public void setAge(Integer age) {
+        this.age = age;
     }
 }

@@ -4,7 +4,7 @@ import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-public class LockDemo
+public class  LockDemo
 {
     public static void main(String[] args) throws InterruptedException {
         Myservice myservice = new Myservice();

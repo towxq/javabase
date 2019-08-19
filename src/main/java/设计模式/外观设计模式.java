@@ -16,7 +16,7 @@ interface Shape{
 
 class Rectangle implements Shape{
 
-    @Override
+
     public void draw() {
         System.out.println("Recrangle draw");
     }
@@ -24,7 +24,6 @@ class Rectangle implements Shape{
 
 class Square implements Shape{
 
-    @Override
     public void draw() {
         System.out.println("Square draw");
     }
@@ -32,7 +31,6 @@ class Square implements Shape{
 
 class  Circle implements Shape{
 
-    @Override
     public void draw() {
         System.out.println("Circle draw");
     }

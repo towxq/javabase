@@ -12,7 +12,6 @@ public class SynchronizedDemo  implements Runnable{
         System.out.println("result="+count);
     }
 
-    @Override
     public void run() {
         synchronized (SynchronizedDemo.class){
             for (int i=0;i<1000000;i++){
@@ -44,7 +43,7 @@ public class SynchronizedDemo  implements Runnable{
 //    1,synchronized关键字提供一种锁的机制，能够保证共享变量的互斥访问，从而防止数据不一致的问题
 //    2,synchronized关键字包括moniter enter和monitor exit 两个JVM命令，能够保证在任何时候任何线程执行到monitor enter成功之前都必须从主内存
 //        中获取数据，而不是从缓存中，在monitor exit运行成功后，共享变量被更新后的值必须刷入主内存
-//    3synchronized的指令严格遵守java happens-before规则，一个monitor exit之前必要有一个monitor enter
+//    3,synchronized的指令严格遵守java happens-before规则，一个monitor exit之前必要有一个monitor enter
 //
 //    synchronized提供一种互斥机制，也就是在同一时刻，只能有一个线程访问同步资源，
 

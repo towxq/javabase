@@ -2,6 +2,7 @@ package spring;
 
 import org.springframework.beans.factory.xml.XmlBeanFactory;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.core.io.ClassPathResource;
 
@@ -12,6 +13,19 @@ public class springdemo {
         DemoMessage demoMessage1 = (DemoMessage) applicationContext.getBean("messagedemo");
         System.out.println(demoMessage.getMessgae());
         System.out.println(demoMessage1.getMessgae());
+
+//        ApplicationContext applicationContext1  = new AnnotationConfigApplicationContext(CompanyConfig.class);
+//        Employee employee = applicationContext1.getBean(Employee.class);
+//        Employee employee1 = applicationContext1.getBean(Employee.class);
+//        employee.setId("111");
+//        employee.setName("sad");
+//        employee1.setId("111");
+//        employee1.setName("sad");
+//        System.out.println(employee==employee1);
+
+
+
+
 
 //        XmlBeanFactory xmlBeanFactory  = new XmlBeanFactory(new ClassPathResource("bean.xml"));//XmlBeanFactory容器
 //        DemoMessage demoMessage2 = (DemoMessage) xmlBeanFactory.getBean("messagedemo");

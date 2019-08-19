@@ -13,7 +13,7 @@ public class 适配器设计模式 {
         ImportedMachine machine = new ImportedMachine();
         target220.Convert_110V();
         machine.work();
-    }
+}
 }
 
 
@@ -27,12 +27,12 @@ interface AdvanceMediaPlayer{
 }
 
 class VlaPlayer implements AdvanceMediaPlayer{
-    @Override
+
     public void playVlc(String filename) {
         System.out.println("play vlc file.name "+filename);
     }
 
-    @Override
+
     public void playMp4(String filename) {
 
     }
@@ -40,12 +40,12 @@ class VlaPlayer implements AdvanceMediaPlayer{
 
 class Mp4Player implements AdvanceMediaPlayer{
 
-    @Override
+
     public void playVlc(String filename) {
 
     }
 
-    @Override
+
     public void playMp4(String filename) {
         System.out.println("play mp4 file.name"+filename);
     }
@@ -65,7 +65,7 @@ class MediaAdpter implements MediaPlayer{
         }
     }
 
-    @Override
+
     public void play(String audioType, String fileNmae) {
         if (audioType.equalsIgnoreCase("vls")){
             advanceMediaPlayer.playVlc(fileNmae);
@@ -79,7 +79,6 @@ class MediaAdpter implements MediaPlayer{
 class AudioPlayer implements MediaPlayer{
     MediaAdpter mediaAdpter;
 
-    @Override
     public void play(String audioType, String fileNmae) {
         if (audioType.equalsIgnoreCase("mp3")){
             System.out.println("play mp3 file.name"+fileNmae);
@@ -110,7 +109,6 @@ class PoerPort220{
 //适配器
 class Adapter220 extends PoerPort220 implements Target{
 
-    @Override
     public void Convert_110V() {
         this.Output_220();
     }

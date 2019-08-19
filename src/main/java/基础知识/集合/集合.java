@@ -26,6 +26,18 @@ public class 集合 {
         while(iterator.hasNext()){
             System.out.println(iterator.next());
         }
+
+        ArrayList<String> list = new ArrayList<String>();
+        ArrayList<Integer> list1 = new ArrayList<Integer>();
+        list.add("aaa");
+        list1.add(123);
+        System.out.println(list.getClass()==list1.getClass());
+
+        HashMap<String,String> hashMap = new HashMap<String,String>();
+        hashMap.put("ss","sad");
+        hashMap.put("sadsad","adasd");
+        hashMap.put("ss","sdsdas");
+        System.out.println(hashMap.get("ss"));
     }
 
 }
@@ -101,3 +113,5 @@ class Z implements Comparable{//定制排序
 //
 //Hashmap不是同步的
 //HashMap是一个链表散列，即数组和链表的结合体
+
+

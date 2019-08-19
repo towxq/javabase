@@ -12,7 +12,7 @@ public class 策略设计模式 {
             salesManC.SalesManShow();
         }
 }
-
+//定义一组算法，将每个算法封装起来，并使他们之间可以互换
 abstract class Startegy{
     public abstract void show();
 }

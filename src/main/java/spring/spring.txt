@@ -41,14 +41,179 @@ spring中，bean的初始化有两种方式
 
 １、ResourceLoader从存储介质中加载Spring配置信息，并使用Resource表示这个配置文件的资源；
 ２、BeanDefinitionReader读取Resource所指向的配置文件资源，然后解析配置文件。配置文件中每一个<bean>解析成一个BeanDefinition对象，
-并保存到BeanDefinitionRegistry中；
+    并保存到BeanDefinitionRegistry中；
 ３、容器扫描BeanDefinitionRegistry中的BeanDefinition，使用Java的反射机制自动识别出Bean工厂后处理后器（实现BeanFactoryPostProcessor接口）的Bean，
-然后调用这些Bean工厂后处理器对BeanDefinitionRegistry中的BeanDefinition进行加工处理。主要完成以下两项工作：
-1）对使用到占位符的<bean>元素标签进行解析，得到最终的配置值，这意味对一些半成品式的BeanDefinition对象进行加工处理并得到成品的BeanDefinition对象；
-2）对BeanDefinitionRegistry中的BeanDefinition进行扫描，通过Java反射机制找出所有属性编辑器的Bean（实现java.beans.PropertyEditor接口的Bean），
-并自动将它们注册到Spring容器的属性编辑器注册表中（PropertyEditorRegistry）；
+    然后调用这些Bean工厂后处理器对BeanDefinitionRegistry中的BeanDefinition进行加工处理。主要完成以下两项工作：
+    1）对使用到占位符的<bean>元素标签进行解析，得到最终的配置值，这意味对一些半成品式的BeanDefinition对象进行加工处理并得到成品的BeanDefinition对象；
+    2）对BeanDefinitionRegistry中的BeanDefinition进行扫描，通过Java反射机制找出所有属性编辑器的Bean（实现java.beans.PropertyEditor接口的Bean），
+       并自动将它们注册到Spring容器的属性编辑器注册表中（PropertyEditorRegistry）；
 4．Spring容器从BeanDefinitionRegistry中取出加工后的BeanDefinition，并调用InstantiationStrategy着手进行Bean实例化的工作；
 5．在实例化Bean时，Spring容器使用BeanWrapper对Bean进行封装，BeanWrapper提供了很多以Java反射机制操作Bean的方法，
-它将结合该Bean的BeanDefinition以及容器中属性编辑器，完成Bean属性的设置工作；
+    它将结合该Bean的BeanDefinition以及容器中属性编辑器，完成Bean属性的设置工作；
 6．利用容器中注册的Bean后处理器（实现BeanPostProcessor接口的Bean）对已经完成属性设置工作的Bean进行后续加工，
-直接装配出一个准备就绪的Bean。
+    直接装配出一个准备就绪的Bean。
+
+spring 作用范围
+    单例 - 每个Spring IoC 容器返回一个bean实例
+    原型- 当每次请求时返回一个新的bean实例
+    请求 - 返回每个HTTP请求的一个Bean实例
+    会话 - 返回每个HTTP会话的一个bean实例
+    全局会话- 返回全局HTTP会话的一个bean实例
+
+spring中bean的创建过程
+    1，调用bean的构造方法创建bean
+    2，通过反射技术调用setter方法进行属性的依赖注入
+    3，如果实现BeanNameAware接口的话,会设置bean的name
+    4，如果实现BeanFactoryAware,会把bean factory设置给bean
+    5，如果实现了ApplicationContextAware，会给bean设置ApplicationContext
+    6,如果实现了BeanPostProcessor接口，则执行前置处理方法
+    7，实现了InitializingBean接口，执行afterPropertiesSet方法
+    8，执行自定义的init方法
+    9，执行BeanPostProcessor接口的后置处理方法
+
+
+spring事务
+    声明事务分两种1，基于XML的事务  2，基于注解的事务
+
+spring的事务隔离级别
+        TransactionDefinition.ISOLATION_DEFAULT:  使用后端数据库默认的隔离级别，Mysql 默认采用的 REPEATABLE_READ隔离级别 Oracle 默认采用的 READ_COMMITTED隔离级别.
+        TransactionDefinition.ISOLATION_READ_UNCOMMITTED: 最低的隔离级别，允许读取尚未提交的数据变更，可能会导致脏读、幻读或不可重复读
+        TransactionDefinition.ISOLATION_READ_COMMITTED:   允许读取并发事务已经提交的数据，可以阻止脏读，但是幻读或不可重复读仍有可能发生
+        TransactionDefinition.ISOLATION_REPEATABLE_READ:  对同一字段的多次读取结果都是一致的，除非数据是被本身事务自己所修改，可以阻止脏读和不可重复读，但幻读仍有可能发生。
+        TransactionDefinition.ISOLATION_SERIALIZABLE:   最高的隔离级别，完全服从ACID的隔离级别。所有的事务依次逐个执行，这样事务之间就完全不可能产生干扰，也就是说，该级别可以防止脏读、不可重复读以及幻读。但是这将严重影响程序的性能。通常情况下也不会用到该级别。
+
+spring事务中有哪几种事务传播行为
+    支持当前事务的情况
+         TransactionDefinition.PROPAGATION_REQUIRED： 如果当前存在事务，则加入该事务；如果当前没有事务，则创建一个新的事务。
+         TransactionDefinition.PROPAGATION_SUPPORTS： 如果当前存在事务，则加入该事务；如果当前没有事务，则以非事务的方式继续运行。
+         TransactionDefinition.PROPAGATION_MANDATORY： 如果当前存在事务，则加入该事务；如果当前没有事务，则抛出异常。（mandatory：强制性）
+    不支持当前事务的情况
+         TransactionDefinition.PROPAGATION_REQUIRES_NEW： 创建一个新的事务，如果当前存在事务，则把当前事务挂起。
+         TransactionDefinition.PROPAGATION_NOT_SUPPORTED： 以非事务方式运行，如果当前存在事务，则把当前事务挂起。
+         TransactionDefinition.PROPAGATION_NEVER： 以非事务方式运行，如果当前存在事务，则抛出异常。
+
+
+Spring容器
+    org.springframework.context.ApplicationContext 接口代表了spring ioc容器，他负责实例化，组装和配置上面所说的bean，容器通过读取配置来实例化，组装和配置bean
+    配置主要有xml,java注解和java代码
+
+    容器内部bean被表示为BeanDefinition对象，包含下列元数据
+        1，一个限制包类名：通常定义好bean的实现类
+        2，bean行为配置，规定了bean的容器的行为方式（生命周期）
+        3，对其他bean的引用，这些引用也被叫做协作者和依赖
+        4，在新创建的对象中设置其他的配置项，例如，管理连接池的bean，你可以设置连接数，最大，最小连接数
+
+    bean的命名约定
+        标准Java规范，例如字段名。主要是，bean的命名是以小写字母开头，之后使用驼峰是命名。举例说明："accountManager"，"accountService"，"userDao"，"loginController"等。
+
+spring context初始化顺序
+    构造函数以及变量的初始化
+        1，初始化logger，显示名，ID
+        2，初始化BeanFactoryPOSTProcessors为空集合
+        3，active = false
+        4，closed = false
+        5，avtiveMonitor = new Object()用于线程同步锁
+        6，startShutdownMonitor = new Object()用于线程同步锁
+        7，初始化applicationListeners为空链表
+        8，resourcePatternResolver = PathMactchingResourcePatternResolver生成用于解析路劲地址为Resource对象
+
+    prepareRefresh容器刷新之前的准备工作
+        1，设置启动时间startDate
+        2，active = true
+        3，initPropertySources初始化上下文的环境量到占位符中，这里主要是系统环境的变量，web容器环境变量，不包含配置文件环境变量
+        4，校验配置的必须有的环境变量是否都有，此处不会加载自定义配置
+
+    obtainFreshBeanFactory获取一个刷新过后的beanFactory
+        1，AbstractRefreshableApplicationContext在这步创建beanFactory加载beandefiniton
+        2，GenericApplicationContext的目的是为了支持所有的bean definition reader ，他是持有一个现成的bean factory 所以这步只是返回自己持有的bean factory
+
+    preparBeanFactory beanFactory的标准初始化工作
+        1，设置ClassLoader
+        2，StandardBeanExpressionResolver 设置表达式解析类Spring EL
+        3，添加PropertyEditorRegistar:ResourceEditorRegistrar这个资源编辑管理者功能是把xml中配置的spring值转成资源对象类型主要有Resource，File，XXXStream，URL，Class之类的东西
+           PropertyEditor就是把String转换成具体引用类型
+        4，添加一个内置的BeanPostProcessor:ApplicationContextAwareProcessor后续再执行这个BeanPostProcessor的初始化预处理方法时候，就会实现了Aware接口的类扫描出来，调用目标类方法
+            传入需要的对象（EnvironmentAware，EmbeddedValueResolverAware,ResourceLoaderAware,ApplicationEventPublisherAware,MessageSourceAware,ApplicationContextAware）
+        5，设置需要忽略的依赖注入的接口，如果bean xml中配置了default-autowire = "byType" 只要类有setXXX方法，即使字段没有用@AutoWired之类的注解，spring也会自动帮你注入，有些Aware
+            之类，不需要spring自动注入的(ResourceLoaderAware,ApplicationEventPublisherAware,MessageSourceAware,ApplicationContextAware,EnvironmentAware)
+
+        6，注册一些可解析的依赖，有些类不是spring容器管理的，但是也可以提供依赖注入的能力（BeanFactory,ResourceLoader,ApplicationEvenPublisher,ApplicationContext）
+        7,如果使用类加载时织入切面，则添加一个Processor
+            编译期织入：通过特定的编译器，将切面织入Java类
+            类加载织入：通过特殊的类加载器，在类字节码加载到jvm时织入
+            运行时织入：采用CGLIB或者JDK动态代理的方式
+
+        8，将自身的ENVIRONMENT，SYSTEM_PROPERTIES，SYSTEM_ENVIRONMENT bean注册到bean factory
+
+    postProcessBeanFactory
+        1,bean definition已经被加载完，但是没有bean被初始化，允许子类注册一些特殊的beanPostProcessors目前只有web容器实现了这个，用于支持ServletContextAware和ServletConfigAware
+
+    invokeBeanFactoryPostProcessors
+        1，调用BeanDefinitionResgistryPostProcess#postProcessBeanDefinitionRegistry每次都会重新获取，意味着高等级优先级的预处理器可以动态添加优先级的
+                                                                                                                                                PriorityOrdered
+                                                                                                                                                    ConfigurationClassPostProcessor处理@Configuration注解的类
+                                                                                                                                                Ordered
+                                                                                                                                                其他
+        2，调用BeanDefinitionRegistryPostProcessor#postProcessBeanFactory
+        3，调用内置的BeanFactoryPostProcessor比如postProcessBeanFactory阶段添加，自己添加的BeanFactoryPOSTProProcessor不在这执行tips:BeanDefinitionRegistryPostProcessor继承自BeanFactoryPostProcessor
+        4，调用BeanFactoryPostProcessor前面已经处理过的BeanFactoryPostProcessor将不在处理，每次都会重新获取，意味着高优先级的预处理器可以动态添加低优先级的
+
+    registerBeanPostProcessors给factory注册Bean预处理器
+        1，PriorityOrdered
+        2,Ordered
+        3,其他只实现了BeanPostProcessors 没有实现上诉两个接口
+        4，实现了这个预处理器实现了MergedBeanDefinitionPostProcessor接口的类被当做internalPostProcessors会把位置挪到最后
+        5，添加ApplicationListenerDetector把实现了ApplicationListener的类加入到applicationContext的applicationListener销毁前把listerner从applicationEventMulticaster中移除
+
+    iniMessageSource messagesource用于解析国际化文件
+        1，如果bean名字为messageSource，设置到当前applicationContext中
+        2，没有则初始化一个委托的messageSource 不做任何事情 delegatingMessageSource
+
+    initApplicationEventMulticaster
+        1,有applicationEventMulticaster则设置到applicationEventMulticaster
+        2,没有则new一个SimpleApplicationEventMulticaster evenMulticaster用于把ApplicationEvent广播出去
+
+    Onrefresh给子类扩展接口，通常没做任何事
+
+    registerListeners注册ApplListener
+        1，添加context内置的Listener
+        2，factory中查找ApplicatonListener listener会监听一个event 当event发生的时候会得到通知
+
+    finishBeanFactoryInitialization
+        1,如果factory中有ConversionService，则设置到conversionService成员中ConversionService是将一种类型转换成另外一种类型的类
+        2，如果采用了类加载的织入，则实例化LoadTimeWeaverAware相关的bean
+        3，停止使用临时的类加载器
+        4，冻结bean定义元数据，允许在这一步缓存所有的bean定义元数据，具体逻辑查看子类
+        5，pareInstantiateSingletons预实例化单例没有配置lazy init的bean，其他的bean会在具体调用getBean的时候才会被实例化
+
+    finishRefresh
+        1，初始化lifecycle处理器，如果factory中有lifecycleProcessor则取factory中的，没有new一个DefaultLifecycleProcessor设置到lifecycleProcessor成员变量
+        2，调用lifecycle处理器的onRefresh方法
+        3，广播ContextRefreshedEvent事件，registerListener中添加事件，这步会找到对应的事件，调用它的方法
+        4，将context注册到LiveBeansView
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
