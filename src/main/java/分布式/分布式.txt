@@ -1,0 +1,49 @@
+dubbo 工作原理
+    第一层：service 层，接口层，给服务提供者和消费者来实现的
+    第二层：config 层，配置层，主要是对 dubbo 进行各种配置的
+    第三层：proxy 层，服务代理层，无论是 consumer 还是 provider，dubbo 都会给你生成代理，代理之间进行网络通信
+    第四层：registry 层，服务注册层，负责服务的注册与发现
+    第五层：cluster 层，集群层，封装多个服务提供者的路由以及负载均衡，将多个实例组合成一个服务
+    第六层：monitor 层，监控层，对 rpc 接口的调用次数和调用时间进行监控
+    第七层：protocal 层，远程调用层，封装 rpc 调用
+    第八层：exchange 层，信息交换层，封装请求响应模式，同步转异步
+    第九层：transport 层，网络传输层，抽象 mina 和 netty 为统一接口
+    第十层：serialize 层，数据序列化层
+
+工作流程
+    第一步：provider 向注册中心去注册
+    第二步：consumer 从注册中心订阅服务，注册中心会通知 consumer 注册好的服务
+    第三步：consumer 调用 provider
+    第四步：consumer 和 provider 都异步通知监控中心
+
+支持的通信协议
+    dubbo  默认就是走 dubbo 协议，单一长连接，进行的是 NIO 异步通信，基于 hessian 作为序列化协议。使用的场景是：传输数据量小（每次请求在 100kb 以内），但是并发量很高
+           长连接，通俗点说，就是建立连接过后可以持续发送请求，无须再建立连接。
+
+    http协议  走 json 序列化。
+
+    hessian   走 hessian 序列化协议，多个短连接，适用于提供者数量比消费者数量还多的情况，适用于文件的传输，一般较少用。
+
+    Hessian 的对象序列化机制有 8 种原始类型：
+        原始二进制数据
+        boolean
+        64-bit date（64 位毫秒值的日期）
+        64-bit double
+        32-bit int
+        64-bit long
+        null
+        UTF-8 编码的 string
+
+CAP
+    C 一致性，数据在多个副本之间是否能够保持一致的特性
+    A 可用性，系统提供的服务一直处于可用的状态，对每一个操作的请求必须在有限时间内返回结果
+    P 分区容错性，分布式系统在遇到网络问题时，任然需要保证对外提供一致性和可用性的服务，除非整个网络发生故障
+
+
+Hessian基于binary-rpc实现的远程，基于HTTP协议传输，以标准的二进制格式来定义请求的信息（对象，方法，参数），传输协议基于TCP
+Hessian可通过Servlet提供远程服务，需要将匹配某个模式的请求映射到Hessian服务
+也可Spring框架整合，通过它的DispatcherServlet可以完成该功能，DispatcherServlet可将匹配模式的请求转发到Hessian服务。
+Hessian的server端提供一个servlet基类, 用来处理发送的请求，而Hessian的这个远程过程调用，完全使用动态代理来实现的,，建议采用面向接口编程，Hessian服务通过接口暴露。
+    Hessian处理过程示意图：
+        客户端——>序列化写到输出流——>远程方法(服务器端)——>序列化写到输出流 ——>客户端读取输入流——>输出结果
+
