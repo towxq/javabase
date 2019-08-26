@@ -96,3 +96,10 @@ class MyTask implements Runnable{
 //      ThreadPoolExecutor提供了动态调整线程池容量大小的方法：setCorePoolSize()和setMaximumPoolSize()，
 //      setCorePoolSize：设置核心池大小
 //      setMaximumPoolSize：设置线程池最大能创建的线程数目大小
+
+
+//java通过Executors提供四种线程池
+//    1，newCachedThreadPool  创建一个可缓存线程池，如果线程池的长度超过处理的需要，可灵活回收线程，若无可回收，则新建线程
+//    2，newFixedThreadPool创建一个定长的线程池，可控制线程的最大并发数，超出的线程会在队列中等待
+//    3，newScheduledThreadPool创建一个定长线程池，支持定时及周期性任务执行
+//    4，newSingleThreadPool创建一个单线程化的线程池，他只会用唯一的线程来执行任务，保证任务按照指定的顺序执行

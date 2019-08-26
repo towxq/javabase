@@ -1,4 +1,4 @@
-package JDBC;
+package JDBC和MySQL;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -89,7 +89,7 @@ public class  jdbcdemo {
 }
 
 
-//JDBC API
+//JDBC和MySQL API
 //1,DriverManager 用来管理，加载驱动程序
 //2，Connection 表示驱动程序提供和数据库连接的对话
 //3，Statement 向数据库发送SQL和取得一组结果

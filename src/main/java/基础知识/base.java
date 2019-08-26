@@ -57,6 +57,12 @@ public class base {
         peo peo = new peo();
         System.out.println(peo.getName()+"--"+peo.getAge());
         System.out.println(1 << 2);
+
+        int i = 1;
+        double m = 1.2;
+        BBb b = new BBb();
+        b.a(m);
+        b.a(i);
     }
 
     public static void change(peo p,peo p2){
@@ -158,5 +164,19 @@ final class peo{
 
     public void setAge(Integer age) {
         this.age = age;
+    }
+}
+
+
+class AAa{
+    final void a(int i){
+        System.out.println("a="+i);
+    }
+}
+
+
+class BBb extends AAa{
+    void a(double i){
+        System.out.println("b="+i);
     }
 }

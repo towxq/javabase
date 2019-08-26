@@ -1,0 +1,146 @@
+LINUX
+Linux系统的启动过程大体上可分为五部分：内核的引导；运行init；系统初始化；建立终端 ；用户登录系统。
+
+在Linux中所有的装置都被当做一个档案来对待
+Linux提供tty1~tty6的文字接口登入，以及tty7的图形接口登入环境  ctrl+alt+f1~f6   ctrl+alt+f7
+
+
+常见命令
+cd：变换目录
+pwd：显示当前目录
+mkdir：建立一个新的目录
+rmdir：删除一个空的目录
+cp  copy  拷贝目录 -r  文件是否存在 -i
+mv  move
+rm  remove
+useradd添加用户用户名
+passwd 修改密码用户名
+groupadd 添加用户组
+userdel删除用户用户名  userdel -r 用户名 删除用户及主目录
+touch hello.txt 新建一个文件
+tab  自动补全命令和目录
+cat 查看文件内容-n 加行号
+more 第一行开始，文件内容多时，空格键翻页
+head 头几页开始
+tail  最后几行  -1 最后一行 用于看日志
+date   时间
+cal    日历
+bc    计算器
+[ctrl+z]   暂停当前进程
+[ctrl+c]   中断指令
+[ctrl+d]   exit相同作用
+
+[man+ls]  操作说明
+df   查看挂载的磁盘总容量，使用，剩余容量    -h G为单位   -k kb单位  -m mb单位
+du  查看目录或者文件的大小  -b bytes单位 -k kb单位  -m mb单位  -h自动调节单位
+
+
+
+
+文档权限
+使用人-使用人群组-其他人
+“-”表示普通文件，“d”代表目录，“l”代表连接文件，“b”代 表设备文件
+r   读  4
+w  写  2
+x   可执行  1
+如果档案名前多一个『 . 』，则代表这个档案为『隐藏档』
+chgrp ：改变档案所属群组  chgrp [组名] [文件名]
+chown ：改变档案拥有者
+- R 递归式地改变指定目录及其下的所有子目录和文件的拥有者。
+
+chmod ：改变档案的权限
+su  切换root
+su -username  切换账户
+chgrp ：改变档案所属群组
+linux能不能被执行与他第一栏的十个属性有关，与文件名一点关系没有（不过可执行和执行成功不一样喔）
+
+
+
+
+
+关机
+将数据同步写入硬盘中的指令： sync
+惯用的关机指令：shutdown
+重新启动，关机： reboot, halt, poweroff
+shutdown  -h now  立刻挂机
+shutdown  -r  now  立刻重启
+如果你要关机，必须要保证当前系统中没有其他用户在线。可以下达 who 这个指令，而如果要看网络的联机状态，可以下达 netstat -a 这个指令，而要看背景执行的程序可以执行 ps -aux 这个指令。使用这些指令可以让你稍微了解主机目前的使用状态！（这些命令在以后的章节中会提及，现在只要了解即可！）
+正确的关机流程为：sysnc ? shutdown ? reboot ? halt
+sync 将数据由内存同步到硬盘中。
+shutdown 关机指令，你可以man shutdown 来看一下帮助文档。例如你可以运行如下命令关机：
+shutdown –h 10 ‘This server will shutdown after 10 mins’ 这个命令告诉大家，计算机将在10分钟后关机，并且会显示在登陆用户的当前屏幕中。
+Shutdown –h now 立马关机
+Shutdown –h 20:25 系统会在今天20:25关机
+Shutdown –h +10 十分钟后关机
+Shutdown –r now 系统立马重启
+Shutdown –r +10 系统十分钟后重启
+reboot 就是重启，等同于 shutdown –r now
+halt 关闭系统，等同于shutdown –h now 和 poweroff
+
+
+vi编辑器
+
+1, vi hello.java
+2, i
+3, esc
+4, :wq 保存  q!不保存
+
+常见目录
+/根
+root : root相关文件
+home :普通用户相关文件
+bin :常用命令目录
+sbin :具有一定权限使用命令
+mnt :默认光驱挂载
+etc:存放配置相关文件
+var:存放常变动的文件
+boot :引导文件
+usr:默认软件安装的
+绝对路径：由根目录(/)开始写起的文件名或目录名称， 例如 /home/dmtsai/.bashrc；
+相对路径：相对于目前路径的文件名写法。 例如 ./home/dmtsai 或 ../../home/dmtsai/ 等等。反正开头不是 / 就属于相对路径的写法
+. ：代表当前的目录，也可以使用 ./ 来表示；
+.. ：代表上一层目录，也可以 ../ 来代表。
+
+
+文档的压缩和解压
+
+gzip hello.txt  压缩  1-9 1压缩最差  9最好  默认 6    不可以压缩目录
+gzip -d  hello.txt 解压
+bzip2 -d  解压       bzip2 -z 压缩
+tar
+-z 是否同时用gzip压缩
+-j 是否同时使用bzip2压缩
+-x 解压缩
+-t 查看tar包里的文件
+-c 建立一个tar包
+-v 可视化
+-f  压缩后的文件名
+-p 使用原文件属性
+
+tar  -cvf    log.tar          log2012.log 仅打包，不压缩！
+tar  -zcvf  log.tar.gz     log2012.log 打包后，以 gzip 压缩
+tar  -zcvf  log.tar.bz2   log2012.log 打包后，以 bzip2 压缩
+
+tar  -zxvf   /opt/soft/test/log.tar.gz   解压
+
+ps -ef | grep java
+
+ps -ef|grep 8080
+查看8080端口的进程号
+
+ps -ef|grep tomcat
+查看tomcat占据的进程号
+
+rm -rf  文件夹
+
+rz   上传
+sz   下载
+
+tail -fn 200 current.txt
+
+#查询catalina.out日志文件中的关键词为2016-04-13 11:26:00的日志信息
+grep -C 10 '2016-04-13 11:26:00' catalina.out |more
+
+grep -C 10 'judgeStaffNumber' current.txt |more
+
+
