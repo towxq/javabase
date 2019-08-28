@@ -63,6 +63,11 @@ public class base {
         BBb b = new BBb();
         b.a(m);
         b.a(i);
+
+        System.out.println(8 & (15-1));
+        System.out.println(8 & (16-1));
+        trycatchdemo();
+
     }
 
     public static void change(peo p,peo p2){
