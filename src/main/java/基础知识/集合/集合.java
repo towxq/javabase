@@ -115,3 +115,7 @@ class Z implements Comparable{//定制排序
 //HashMap是一个链表散列，即数组和链表的结合体
 
 
+//fail-fast机制是Java集合中的一种错误机制，多个线程对同一集合进行操作时，可能发生fail-fast机制
+//    比如一个线程A通过iterator去遍历集合的过程中，该集合的内容发生的改变会抛出异常
+
+
