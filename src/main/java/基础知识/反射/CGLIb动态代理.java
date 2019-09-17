@@ -20,6 +20,9 @@ public class CGLIb动态代理 implements MethodInterceptor{
 
     @Override
     public Object intercept(Object o, Method method, Object[] objects, MethodProxy methodProxy) throws Throwable {
-        return methodProxy.invokeSuper(o,objects);
+        System.out.println("intercept before");
+        Object obj =  methodProxy.invokeSuper(o,objects);
+        System.out.println("intercept after");
+        return  obj;
     }
 }

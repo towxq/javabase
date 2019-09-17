@@ -1,7 +1,50 @@
 package 基础知识.IO;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.nio.ByteBuffer;
+import java.nio.channels.ByteChannel;
+import java.nio.channels.FileChannel;
+
 public class NIOdemo
 {
+    public static void main(String[] args){
+
+    }
+
+    public static void fastcopy(String src,String dist) throws IOException {
+        //获取文件的输入字节流
+        FileInputStream fileInputStream = new FileInputStream(src);
+        //获取输入字节流的文件通道
+        FileChannel fcin = fileInputStream.getChannel();
+
+        //获取输出字节流
+        FileOutputStream fileOutputStream = new FileOutputStream(dist);
+        //获取输出字节流的通道
+        FileChannel fcout = fileInputStream.getChannel();
+
+        //为缓冲区分配1024字节
+        ByteBuffer byteBuffer = ByteBuffer.allocateDirect(1024);
+
+        while(true){
+            //输入管道读取到缓冲区
+            int r = fcin.read(byteBuffer);
+
+            //read返回-1表示读完
+            if(r==-1){
+                break;
+            }
+
+            //切换读写
+            byteBuffer.flip();
+            //缓冲区的内容写入输出文件中
+            fcout.write(byteBuffer);
+            //清空缓冲区
+            byteBuffer.clear();
+        }
+    }
 }
 
 //NIO                         IO

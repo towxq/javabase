@@ -18,6 +18,9 @@ public class JDK动态代理 implements InvocationHandler{
 
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-        return method.invoke(target,args);
+        System.out.println("invoke before");
+        Object obj =  method.invoke(target,args);
+        System.out.println("invoke after");
+        return obj;
     }
 }

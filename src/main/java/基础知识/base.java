@@ -68,6 +68,23 @@ public class base {
         System.out.println(8 & (16-1));
         trycatchdemo();
 
+        System.out.println("gcd(10,6)--"+gcd(13,5));
+
+    }
+
+    public static int gcd(int m,int n){
+        if(m<n){
+            int temp = m;
+            m = n;
+            n = temp;
+          }
+          int r = m % n;
+          while(r>0){
+              m = n;
+              n = r;
+              r = m % n;
+          }
+          return n;
     }
 
     public static void change(peo p,peo p2){
