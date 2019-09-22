@@ -1,0 +1,77 @@
+    1、启动一个WEB项目的时候，WEB容器会去读取它的配置文件web.xml，读取<listener>和<context-param>两个结点。
+    2、紧急着，容创建一个ServletContext（servlet上下文），这个web项目的所有部分都将共享这个上下文。
+    3、容器将<context-param>转换为键值对，并交给servletContext。
+    4、容器创建<listener>中的类实例，创建监听器。
+
+Load-on-startup
+    load-on-startup元素在web应用启动的时候指定了servlet的加载顺序，它的值必须是一个整数，负数或者不存在的话，容器会在servlet被调用的时候，记载，如果是正整数或者零，容器在配置的
+    时候就加载并初始化这个servlet，容器必须保证值小的先被加载，如果相等自动选择加载谁
+
+    在servlet配置中，当值为0或者大于0时，表示容器在应用启动的时候加载这个servlet，负数在servlet被选择的时候才加载，正数越小，优先级越高
+
+加载顺序
+    web.xml 的加载顺序是：ServletContext -> context-param -> listener -> filter -> servlet
+
+context-param
+    作用：该元素用来声明应用范围(整个WEB项目)内的上下文初始化参数
+    1. 启动一个WEB项目的时候,容器(如:Tomcat)会去读它的配置文件web.xml.读两个节点: <listener></listener> 和 <context-param></context-param>
+    2.紧接着,容器创建一个ServletContext(上下文),这个WEB项目所有部分都将共享这个上下文.
+    3.容器将<context-param></context-param>转化为键值对,并交给ServletContext.
+    4.容器创建<listener></listener>中的类实例,即创建监听.
+    5.在监听中会有contextInitialized(ServletContextEvent args)初始化方法,在这个方法中获得ServletContext = ServletContextEvent.getServletContext();context-param的值 = ServletContext.getInitParameter("context-param的键");
+    6.得到这个context-param的值之后,你就可以做一些操作了.注意,这个时候你的WEB项目还没有完全启动完成.这个动作会比所有的Servlet都要早.换句话说,这个时候,你对<context-param>中的键值做的操作,将在你的WEB项目完全启动之前被执行.
+    7.举例.你可能想在项目启动之前就打开数据库.那么这里就可以在<context-param>中设置数据库的连接方式,在监听类中初始化数据库的连接.
+    8.这个监听是自己写的一个类,除了初始化方法,它还有销毁方法.用于关闭应用前释放资源.比如说数据库连接的关闭.
+
+    <context-param>
+        <param-name>参数名</param-name>
+        <param-value>参数值</param-value>
+    </context-param>
+
+过滤器配置：将一个名字与一个实现javaxs.servlet.Filter接口的类相关联。
+        1、对用户请求进行统一认证，权限管理
+        2、对用户的访问请求进行记录和审核
+        3、对用户发送的数据进行过滤和替换
+        4、转换图像格式
+        5、对响应的内容进行压缩，减少传输量
+        6、对请求和相应进行加密处理
+
+     <filter>
+               <filter-name>setCharacterEncoding</filter-name>
+               <filter-class>com.myTest.setCharacterEncodingFilter</filter-class>
+               <init-param>
+                   <param-name>encoding</param-name>
+                   <param-value>GB2312</param-value>
+               </init-param>
+       </filter>
+       <filter-mapping>
+              <filter-name>setCharacterEncoding</filter-name>
+              <url-pattern>/*</url-pattern>
+      </filter-mapping>
+
+监听器配置
+    web监听器是一种Servlet中的特殊的类，它们能帮助开发者监听web中的特定事件，比如ServletContext,HttpSession,ServletRequest的创建和销毁；变量的创建、销毁和修改等。
+    可以在某些动作前后增加处理，实现监控。
+
+    在Servlet规范中定义了多种类型的监听器，它们用于监听的事件源是三个域对象，分别为：
+        ServletContext
+        HttpSession
+        ServletRequest
+
+     <listener>
+            <listerner-class>listener.SessionListener</listener-class>
+     </listener>
+
+
+
+
+Servlet配置
+    Servlet接口就是处理网络请求的一套规范，他负责连接web服务器（如tomcat服务器），交互式的生成动态的web内容
+     <servlet>
+         <servlet-name>snoop</servlet-name>
+            <servlet-class>SnoopServlet</servlet-class>
+         </servlet>
+         <servlet-mapping>
+            <servlet-name>snoop</servlet-name>
+         <url-pattern>/snoop</url-pattern>
+     </servlet-mapping>
