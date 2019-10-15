@@ -202,6 +202,13 @@ spring context初始化顺序
 
 
 
+1，spring的核心类
+    1，BeanFactory 产生一个实例，可以实现单例模式
+    2，BeanWrapper 提供统一的set和get方法
+    3，ApplicationContext 框架的实现，包含BeanFactory的所有功能
+2，spring的事务，以及实现方式
+3，解释AOP，Aspect切面，AOP的通知，织入的理解，关注点和横切关注
+4，IOC和DI的理解，设计原理
 
 
 

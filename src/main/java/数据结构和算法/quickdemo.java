@@ -7,11 +7,12 @@ public class quickdemo {
     public static void main(String[] args){
         int[] arr = {51, 38, 65, 97, 76, 13, 27, 49, 78, 34, 12, 64, 5, 4, 62, 99, 98, 54, 56, 17, 18, 23, 34, 15, 35, 25, 53, 49};
         int[] arr1 = {6,1,2,7,9,3,4,5,10,8};
-//        int[] arr3 = maopaodemo(arr);
-//        for (int m : arr3) {
-//            System.out.print(m + ":");
-//        }
-        quick(arr1);
+        int[] arr2 = {5,13,7,8,11,3,27,81,44};
+        int[] arr3 = charu(arr);
+        for (int m : arr3) {
+            System.out.print(m + ":");
+        }
+//        quick(arr2);
     }
 
     public static int[] charu(int[] a){
@@ -55,30 +56,31 @@ public class quickdemo {
         return arr;
     }
 
-    private static int[] xuanzedemo(int[] a){
-        for (int i=0;i<a.length;i++){
-            for (int n = i+1;n<a.length;n++){
-                if (a[i]>a[n]){
-                    int temp = a[i];
-                    a[i] = a[n];
-                    a[n] = temp;
+    public static int[] xuanzetest(int[] arr){
+        for (int i = 0;i<arr.length;i++){
+            for (int n = i+1;n<arr.length;n++){
+                if (arr[i]>arr[n]){
+                    int swap = arr[i];
+                    arr[i] = arr[n];
+                    arr[n] = swap;
                 }
             }
         }
-        return a;
+        return arr;
     }
 
-    private static int[] maopaodemo(int[] a) {
-        for (int i = 0; i < a.length-1; i++) {
-            for (int n = 0; n < a.length - 1- i; n++) {
-                if (a[n] > a[n+1]) {
-                    int temp = a[n];
-                    a[n] = a[n+1];
-                    a[n+1] = temp;
+
+    public static int[] maopaotest(int[] arr){
+        for (int i = 0;i<arr.length-1;i++){
+            for (int n = 0;n<arr.length-1-i;n++){
+                if (arr[n] > arr[n+1] ){
+                    int swap = arr[n];
+                    arr[n] = arr[n+1];
+                    arr[n+1] = swap;
                 }
             }
         }
-        return a;
+        return arr;
     }
 
     public static void quick(int[] a){
@@ -117,5 +119,23 @@ public class quickdemo {
         a[left]=temp;
         return left;
     }
+
+
+    private static int getmiddletest(int[] a, int left, int right) {
+        int temp = a[left];
+        while(left<right) {
+            while (left < right && a[right] >= temp) {
+                right--;
+            }
+            a[left] = a[right];
+            while (left < right && a[left] <= a[right]) {
+                left++;
+            }
+            a[right]=a[left];
+        }
+        a[left] = temp;
+        return left;
+    }
+
 
 }
