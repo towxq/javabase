@@ -20,6 +20,10 @@ Java序列化
             transient修饰符仅适用于变量，不适用于方法和类。在序列化时，如果我们不想序列化特定变量以满足安全约束，那么我们应该将该变量声明为transient。
             执行序列化时，JVM会忽略transient变量的原始值并将默认值保存到文件中。因此，transient意味着不要序列化。
 
+具体怎么序列化呢？
+    以 ObjectOutputStream 为例吧，它在序列化的时候会依次调用 writeObject()→writeObject0()→writeOrdinaryObject()→writeSerialData()→invokeWriteObject()→defaultWriteFields()
+那怎么反序列化呢？
+    以 ObjectInputStream 为例，它在反序列化的时候会依次调用 readObject()→readObject0()→readOrdinaryObject()→readSerialData()→defaultReadFields()
 
 Hessian序列化
         hessian序列化比Java序列化高效的多，字节流也要短的多，支持的没有Java的序列化全面，Java序列化将类的元数据和业务数据全部序列化，整个继承关系也全部序列化，包含所有信息

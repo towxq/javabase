@@ -1,21 +1,44 @@
 package 基础知识.多线程;
 
-public class SynchronizedDemo  implements Runnable{
-    private static int count = 0;
+public class SynchronizedDemo{
+    public static void main(String[] args) {
+        Number number = new Number();
+        Thread t1 = new Thread(number);
+        Thread t2 = new Thread(number);
+        t1.start();
+        t2.start();
 
-    public static void main(String[] args) throws InterruptedException {
-        for (int i =0;i<10;i++){
-            Thread thread = new Thread(new SynchronizedDemo());
-            thread.start();
-        }
-        Thread.sleep(500);
-        System.out.println("result="+count);
     }
+}
 
+class Number implements Runnable{
+
+    private int num = 0;
+
+    private Object object = new Object();
+    @Override
     public void run() {
-        synchronized (SynchronizedDemo.class){
-            for (int i=0;i<1000000;i++){
-                count++;
+        while(true){
+            synchronized (object){
+
+                object.notify();
+
+                if (num<100){
+                    try {
+                        Thread.sleep(10);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    System.out.println(Thread.currentThread().getName()+"---"+num);
+                    num++;
+                    try {
+                         object.wait();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }else{
+                    break;
+                }
             }
         }
     }
@@ -92,4 +115,6 @@ public class SynchronizedDemo  implements Runnable{
 
 //        任意线程对Object的访问，首先要获得Object的监视器，如果没有获取到监视器的线程将会被阻塞在同步和同步方法的入口处果获取失败，该线程就进入同步状态，线程状态变为BLOCKED，当Object的监视器占有
 //        者释放后，在同步队列中得线程就会有机会重新获取该监视器
+
+//汇编层面 lock comxchg
 

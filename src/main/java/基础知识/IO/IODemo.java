@@ -5,8 +5,8 @@ import java.io.*;
 public class IODemo {
         public static void main(String[] args) throws IOException {
 
-            FileInputStream fileInputStream = new FileInputStream("D://aa.txt");
-            InputStream inputStream = new BufferedInputStream(fileInputStream);
+//            FileInputStream fileInputStream = new FileInputStream("D://aa.txt");
+//            InputStream inputStream = new BufferedInputStream(fileInputStream);
 
 //            int i = 0;
 //            while ((i=fileInputStream.read())!=-1){
@@ -82,15 +82,24 @@ public class IODemo {
 //             fileOutputStream.close();
 
 
-             BufferedInputStream inputStream1 = new BufferedInputStream(new FileInputStream("D://001.png"));
-             BufferedOutputStream outputStream = new BufferedOutputStream(new FileOutputStream("D://002.png"));
-             int len = 0;
-             byte[] bytes = new byte[1024];
-             while((len = inputStream1.read(bytes))!=-1){
-                 outputStream.write(bytes,0,len);
+//             BufferedInputStream inputStream1 = new BufferedInputStream(new FileInputStream("D://2.mov"));
+//             BufferedOutputStream outputStream = new BufferedOutputStream(new FileOutputStream("G://2.mov"));
+//             int len = 0;
+//             byte[] bytes = new byte[1024];
+//             while((len = inputStream1.read(bytes))!=-1){
+//                 outputStream.write(bytes,0,len);
+//             }
+//             inputStream1.close();
+//             outputStream.close();
+             BufferedReader bufferedReader =new BufferedReader(new InputStreamReader(System.in));
+             String s = null;
+             s = bufferedReader.readLine();
+             while (s!=null){
+                 if (s.equalsIgnoreCase("exit")) break;
+                 System.out.println(s.toUpperCase());
+                 s = bufferedReader.readLine();
              }
-             inputStream.close();
-             outputStream.close();
+             bufferedReader.close();
         }
 }
 

@@ -55,6 +55,8 @@ explain分析效果
         using temporary：查询有使用临时表, 一般出现于排序， 分组和多表 join 的情况， 查询效率不高，建议优化。
         using where ：表名使用了where过滤。
 
+    11，partitions 表分区后，查询到哪个分区
+
 
 那些情况需要创建索引
     1，主键建立唯一索引

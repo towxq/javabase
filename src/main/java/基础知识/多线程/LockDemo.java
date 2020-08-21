@@ -7,7 +7,7 @@ import java.util.concurrent.locks.ReentrantLock;
 public class  LockDemo
 {
     public static void main(String[] args) throws InterruptedException {
-        Myservice myservice = new Myservice();
+//        Myservice myservice = new Myservice();
 //        MyThreadTest m1 = new MyThreadTest(myservice);
 //        MyThreadTest m2 = new MyThreadTest(myservice);
 //        MyThreadTest m3 = new MyThreadTest(myservice);
@@ -21,29 +21,59 @@ public class  LockDemo
 //        m4.start();
 //        m5.start();
 
-        MyThreadTest a = new MyThreadTest(myservice);
-        a.start();
-        Thread.sleep(3000);
-        myservice.signal();
+//        MyThreadTest a = new MyThreadTest(myservice);
+//        a.start();
+//        Thread.sleep(3000);
+//        myservice.signal();
 
-
+        Window window = new Window();
+        Thread t1 = new Thread(window);
+        Thread t2 = new Thread(window);
+        Thread t3 = new Thread(window);
+        t1.start();
+        t2.start();
+        t3.start();
     }
 
 }
+class Window implements Runnable{
+
+    private int num = 100;
+
+    private ReentrantLock lock = new ReentrantLock();
+    @Override
+    public void run() {
+        while(true){
+            try {
+                lock.lock();
+                if (num>0){
+                    System.out.println(Thread.currentThread().getName()+"--余票："+num);
+                    num--;
+                }else{
+                    break;
+                }
+            }finally{
+                lock.unlock();
+            }
+
+        }
+    }
+}
+
 class Myservice{
     private Lock lock = new ReentrantLock();
     public Condition condition = lock.newCondition();
 
-//    public void testMethod(){
-//        lock.lock();
-//        try{
-//            for (int i =0;i<5;i++){
-//                System.out.println("ThreadName="+Thread.currentThread());
-//            }
-//        }finally {
-//            lock.unlock();
-//        }
-//    }
+    public void testMethod(){
+        lock.lock();
+        try{
+            for (int i =0;i<5;i++){
+                System.out.println("ThreadName="+Thread.currentThread());
+            }
+        }finally {
+            lock.unlock();
+        }
+    }
 
     public void await(){
         lock.lock();
@@ -80,8 +110,8 @@ class MyThreadTest extends Thread{
     }
 
     public void run(){
-//        myservice.testMethod();
-          myservice.await();
+        myservice.testMethod();
+//          myservice.await();
     }
 }
 //synchronized关键字的缺陷

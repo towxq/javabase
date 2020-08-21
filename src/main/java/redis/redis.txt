@@ -20,7 +20,7 @@ Redis
 
 
          hash(哈希)   hash是一个键值的集合 每个哈希可以存储40多亿的键值对
-            hset 在散列里面关联给定的键值对
+                hset 在散列里面关联给定的键值对
                 hset hash-ket sub-keyq value1
             hget 获取指定散列键的值
                 hget hash-key sub-key1
@@ -177,3 +177,9 @@ redis的集群架构   读写分离   主从复制   水平扩容
             return size()> CACHE_SIZE;//当map中的数据大于指定的缓存个数的时候，自动删除最老的数据
         }
     }
+
+
+redis的优势
+    1，高度写  redis的读的速度 为 100000 次/s  写 80000次/s
+    2，redis的所有的操作都是原子性的，单个操作是原子性的，多个操作可以通过MULTI和EXEC指令抱起来
+

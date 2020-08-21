@@ -1,4 +1,4 @@
-package 数据结构和算法;
+package 数据结构和算法.排序;
 
 /**
  * Created by MSI on 2016/7/17.

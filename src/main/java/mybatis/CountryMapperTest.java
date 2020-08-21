@@ -1,16 +1,18 @@
 package mybatis;
 
+import com.alibaba.fastjson.JSON;
 import org.apache.ibatis.session.SqlSession;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.lang.reflect.Array;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 public class CountryMapperTest extends BaseMapperTest{
     @Test
-    public void testSelectAll(){
+    public void testSelectAll() throws InterruptedException {
         SqlSession sqlSession = getSqlSession();
         try{
 //            UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
@@ -77,25 +79,87 @@ public class CountryMapperTest extends BaseMapperTest{
 //                System.out.println(result);
 
 
-            UserDemoMapper um = sqlSession.getMapper(UserDemoMapper.class);
-            // 调用selectUserById方法
-            User user = um.selectUserById(1);
-            // 查看查询到的user对象信息
-            System.out.println(user.getId() + " " + user.getUsername());
-            // 查看user对象关联的订单信息
-            List<Order> orders = user.getOrders();
-            for (Order order : orders)
-            {
-                System.out.println(order.toString());
+//            UserDemoMapper um = sqlSession.getMapper(UserDemoMapper.class);
+//            // 调用selectUserById方法
+//            User user = um.selectUserById(1);
+//            // 查看查询到的user对象信息
+//            System.out.println(user.getId() + " " + user.getUsername());
+//            // 查看user对象关联的订单信息
+//            List<Order> orders = user.getOrders();
+//            for (Order order : orders)
+//            {
+//                System.out.println(order.toString());
+//            }
+
+            SensorRecordMapper sensorRecordMapper = sqlSession.getMapper(SensorRecordMapper.class);
+            String tableName = "freeze_sensor_record_892b62b47fd8835d1c7ded3d7396e3a7";
+////            System.out.println(sensorRecordMapper.existTable(tableName));
+            Map<String,Object> map = new HashMap<String, Object>();
+            for (int i =0;i<=400;i++){
+                map.put(generate(),0);
+            }
+            for (int n =0;n<2000;n++){
+                Map<String,Object> paramsmap = new HashMap<String, Object>();
+                for (String key:map.keySet()){
+                    map.put(key,(int)(Math.random()*100+1));
+                }
+                paramsmap.put("tableName",tableName);
+                paramsmap.put("dataTime",dateFormat(new Date()));
+                paramsmap.put("reportTime",dateFormat(new Date()));
+                paramsmap.put("sensorValue",JSON.toJSONString(map));
+                paramsmap.put("state",0);
+                sensorRecordMapper.insert(paramsmap);
+                sqlSession.commit();
+                Thread.sleep(Long.valueOf("500"));
+//                int beginid =  10;
+//                int endid =  206;
+//                List<Integer> integers = new ArrayList<Integer>();
+//                for (int i = beginid;i<=endid;i = i+2){
+//                    integers.add(i);
+//                }
+//                Map<String, Object> params = new HashMap<String,Object>();
+//                params.put("tableName",tableName);
+//                params.put("beforedate","2020-04-07 20:21:35" );
+//                params.put("nowdate","2020-04-09 20:21:35");
+//                params.put("ids",integers);
+//                List<SensorRecord> sensorRecords = sensorRecordMapper.selectById(tableName,integers);
+////                sqlSession.commit();
+//                System.out.println(sensorRecords.size());
             }
         }finally {
             sqlSession.close();
         }
     }
 
-    private void printList(List<SysUser> sysUsers) {
-        for (SysUser sysUser: sysUsers){
-            System.out.println(sysUser.getId()+"---"+sysUser.getUserName()+"---"+sysUser.getUserPassword());
+//    private void printList(List<SysUser> sysUsers) {
+//        for (SysUser sysUser: sysUsers){
+//            System.out.println(sysUser.getId()+"---"+sysUser.getUserName()+"---"+sysUser.getUserPassword());
+//        }
+//    }
+
+    public static String generate() {
+        char[] letters = { 'a', 'b', 'c', 'd', 'e', 'f',
+                'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r',
+                's', 't', 'u', 'v', 'w', 'x', 'y', 'z' };
+        boolean[] flag = new boolean[letters.length];//初始化都为false
+        char[] results = new char[5];
+        for (int i = 0; i < 5; i++) {
+            int index = 0;
+            do {
+                index = (int) (Math.random() * 26);//第一个肯定是不重复的
+            } while (flag[index]);
+            results[i] = letters[index];
+            flag[index] = true;
         }
+        StringBuilder stringBuilder = new StringBuilder();
+        for (char c:results){
+            stringBuilder.append(c);
+        }
+        return stringBuilder.toString();
+    }
+
+    public static String dateFormat(Date date) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        return sdf.format(date);
     }
 }

@@ -1,26 +1,31 @@
 package 基础知识.多线程;
 
-import org.omg.CosNaming.NamingContextExtPackage.StringNameHelper;
-
-import java.util.concurrent.*;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.FutureTask;
 
 public class CallableTest {
     public static void main(String[] args) throws InterruptedException, ExecutionException {
-        ExecutorService executor = Executors.newCachedThreadPool();
-        Task task = new Task();
-
-        FutureTask<Integer> futureTask = new FutureTask<Integer>(task);
-        executor.submit(futureTask);
-        executor.shutdown();
+//        ExecutorService executor = Executors.newCachedThreadPool();
+//        Task task = new Task();
+//
+//        FutureTask<Integer> futureTask = new FutureTask<Integer>(task);
+//        executor.submit(futureTask);
+//        executor.shutdown();
 
 //        Future<Integer> future = executor.submit(task);
 //        executor.shutdown();
 
-        Thread.sleep(1000);
-        System.out.println("主线程执行任务");
-        System.out.println("task运行结果"+futureTask.get());
-        System.out.println("所有任务执行结束");
+//        Thread.sleep(1000);
+//        System.out.println("主线程执行任务");
+//        System.out.println("task运行结果"+futureTask.get());
+//        System.out.println("所有任务执行结束");
 
+
+        Task task = new Task();
+        FutureTask futureTask = new FutureTask(task);
+        new Thread(futureTask).start();
+        System.out.println("和="+futureTask.get());
     }
 }
 
@@ -32,7 +37,7 @@ class Task implements Callable<Integer>{
         System.out.println("子线程进行计算中。。。");
         Thread.sleep(3000);
         int sum = 0;
-        for (int i=0;i<100;i++){
+        for (int i=0;i<=100;i++){
             sum = sum +i;
         }
         return sum;

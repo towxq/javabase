@@ -1,8 +1,5 @@
 package 基础知识;
 
-import javax.management.monitor.Monitor;
-import java.util.concurrent.ExecutorService;
-
 public class base {
     public static void main(String[] args){
         float af = 5.234556f;
@@ -71,6 +68,39 @@ public class base {
 
         System.out.println("gcd(10,6)--"+gcd(13,5));
 
+        season season = 基础知识.season.SPRING;
+        System.out.println(season);
+
+        for (season sss:season.values()){
+            System.out.println(sss);
+        }
+
+        double mss = (double) 4800/3000.0;
+        int msss = (int) mss;
+        System.out.println(mss);
+        System.out.println(msss);
+
+        System.out.println(1>>>16);
+        System.out.println(1<<2);
+        System.out.println(8>>1);
+
+        int x=4;
+        System.out.println(x++);
+
+        FunctionalInterfaceDemo functionalInterfaceDemo = ()->{
+            System.out.println("saasas");
+        };
+        functionalInterfaceDemo.ss();
+
+//        List<Integer> list = new ArrayList<Integer>();
+//        for (int n = 10;n<=206;n = n+2){
+//            list.add(n);
+//        }
+//        for (int aaa:list) {
+//            System.out.print(aaa+"-");
+//        }
+//        System.out.println();
+//        System.out.println(list.size());
     }
 
     public static int gcd(int m,int n){
@@ -105,13 +135,23 @@ public class base {
     }
 }
 
+@FunctionalInterface
+interface FunctionalInterfaceDemo{
+    void ss();
+    default void aa(){
+        System.out.println("aa");
+    }
+}
+
 
 class demo{
     final int a;
     static {
+        //静态代码块随着类的加载而执行，而且只执行一次，初始化类的信息
         System.out.println("静态初始化块");
     }
     {
+        //每创建一个对象，就执行一次非静态代码块，可以给对象的属性等初始化
         a = 0;//可以给final赋值
         System.out.println("初始化块");
     }
@@ -202,4 +242,8 @@ class BBb extends AAa{
     void a(double i){
         System.out.println("b="+i);
     }
+}
+//枚举的实例是常量
+enum season{
+    SPRING,SUMMER,AUTUMN,WINTER
 }

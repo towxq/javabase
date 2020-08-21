@@ -1,18 +1,18 @@
 package spring;
 
-import org.springframework.beans.factory.xml.XmlBeanFactory;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.springframework.core.io.ClassPathResource;
 
 public class springdemo {
     public static void main(String[] args){
         ApplicationContext applicationContext  = new ClassPathXmlApplicationContext("bean.xml");//ApplicationContext容器
-        DemoMessage demoMessage = (DemoMessage) applicationContext.getBean("messagedemo");
-        DemoMessage demoMessage1 = (DemoMessage) applicationContext.getBean("messagedemo");
-        System.out.println(demoMessage.getMessgae());
-        System.out.println(demoMessage1.getMessgae());
+//        DemoMessage demoMessage = (DemoMessage) applicationContext.getBean("messagedemo");
+//        DemoMessage demoMessage1 = (DemoMessage) applicationContext.getBean("messagedemo1");
+        Employee employee = (Employee) applicationContext.getBean("employee");
+//        System.out.println(demoMessage.getMessgae());
+//        System.out.println("++++"+demoMessage1.getMessgae());
+        System.out.println("---------------");
+        System.out.println(employee.toString());
 
 //        ApplicationContext applicationContext1  = new AnnotationConfigApplicationContext(CompanyConfig.class);
 //        Employee employee = applicationContext1.getBean(Employee.class);
@@ -36,6 +36,9 @@ public class springdemo {
     }
 }
 
+//ClassPathXmlApplication：它是从类的根路径下加载xml配置文件（推荐用这种）。
+//FileSystemXmlApplication: 它是从磁盘路径上加载配置文件，配置文件可以在磁盘的任意位置。（但使用不灵活，不推荐）
+//AnnotationConfigApplication：当我们使用注解配置容器对象时，需要使用此类来创建spring容器。它用来读取注解。（springboot默认使用这个）
 
 //在Java中将不同的资源抽象成URL 通过注册不同的handler（URLStreamHandler）来处理不同来源的读取逻辑，spring对其内部使用到的资源实现了自己的
 //抽象结构Resource接口来封装底层资源

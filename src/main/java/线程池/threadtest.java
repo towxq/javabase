@@ -63,6 +63,7 @@ class MyTask implements Runnable{
 
 //1，线程池的状态
 //    定义了表示线程池状态的变量
+
 //
 //2，任务的执行
 //    a,如果当前线程池中的线程数目小于corePoolsize，则每来一个任务，就会创建一个线程去执行这个任务

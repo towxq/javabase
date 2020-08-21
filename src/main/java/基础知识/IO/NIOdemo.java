@@ -1,11 +1,9 @@
 package 基础知识.IO;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.ByteBuffer;
-import java.nio.channels.ByteChannel;
 import java.nio.channels.FileChannel;
 
 public class NIOdemo
@@ -59,6 +57,7 @@ public class NIOdemo
 //                              C也在河边钓鱼，但与A、B不同的是，C比较聪明，他给鱼竿上挂一个铃铛，当有鱼上钩的时候，这个铃铛就会被碰响，C就会将鱼钓上来。
 //    AIO asynchronous I/O）   进程调用读取到指令后内核负责数据从IO设备直至复制内存后再回调进程函数
 //                              E也想钓鱼，但E有事情，于是他雇来了F，让F帮他等待鱼上钩，一旦有鱼上钩，F就打电话给E，E就会将鱼钓上去
+//                                windows支持，Linux不支持，netty封装的是NIO
 
 //NIO                         IO
 //面向缓冲                  面向流
@@ -93,6 +92,7 @@ public class NIOdemo
 //缓冲（Buffer）
 //    Buffer可以理解为一块内存区域，可以写入数据，并且在之后的读取，这快内存被包装成NIO buffer对象，它提供一些方法来简单的操作内存
 
+//jdk的byteBuffer只有一个指针，容易出现问题，netty的buffer有两个指针，一个读一个写
 
 //选择器（Selector）
 //    可以实现一个单独的线程来监控多个注册在她上面的通道，通过一定的选择机制，实现多路复用的效果

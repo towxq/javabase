@@ -1,9 +1,5 @@
-package 基础知识.反射;
+package 基础知识.反射.动态代理;
 
-import javafx.beans.binding.ObjectExpression;
-import org.springframework.cglib.proxy.MethodInterceptor;
-
-import javax.security.auth.login.Configuration;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
