@@ -1,0 +1,8 @@
+面向切面编程 AOP
+    Aspectj----纯java实现
+
+    proxy---jdk动态代理---cglib---asm javasit
+
+ spring aop 默认是jdk动态代理 也可以使用cglib代理
+
+ 1，Enabling @Aspectj Support---应用支持@Aspectj

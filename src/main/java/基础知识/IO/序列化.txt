@@ -6,7 +6,7 @@ Java序列化
     　　1） 把对象的字节序列永久地保存到硬盘上，通常存放在一个文件中；
     　　2） 在网络上传送对象的字节序列。
 
-        s​e​r​i​a​l​V​e​r​s​i​o​n​U​I​D​:​ ​字​面​意​思​上​是​序​列​化​的​版​本​号​，凡是实现Serializable接口的类都有一个表示序列化版本标识符的静态变量
+        serialVersionUID:字面意思上是序列化的版本号，凡是实现Serializable接口的类都有一个表示序列化版本标识符的静态变量
                           SerialVersionUID用于对象的版本控制。当您添加或修改类中的任何字段时，已经序列化的类将无法恢复，
                           因为serialVersionUID已为新类生成与旧的序列化对象将不同。Java序列化过程依赖于正确的serialVersionUID恢复序列化对象的状态，
                           并在serialVersionUID不匹配时抛出java.io.InvalidClassException 异常。
@@ -24,6 +24,35 @@ Java序列化
     以 ObjectOutputStream 为例吧，它在序列化的时候会依次调用 writeObject()→writeObject0()→writeOrdinaryObject()→writeSerialData()→invokeWriteObject()→defaultWriteFields()
 那怎么反序列化呢？
     以 ObjectInputStream 为例，它在反序列化的时候会依次调用 readObject()→readObject0()→readOrdinaryObject()→readSerialData()→defaultReadFields()
+
+常用的Serialize方案
+    1，java的原生的ObjectOutputStream.write()和ObjectInputStream.read()进行对象序列化和反序列化
+        优点：
+             1，java自带API序列化，简单方便，无依赖
+             2，不用担心其中的数据解析会丢失字段，精度
+        缺点
+             1，双方调试麻烦，跨团队合适问题多
+             2，传递的对象中包含了元素信息，占用空间较大
+    2，基于JSON的序列化和反序列化
+        优点
+            1，简单，方便，无需关注序列化的对象格式
+            2，开源中有很多的组件的支持
+            3，很多RPC框架中，基本都支持这样的方案
+        缺点
+            1，对象属性中如果包含Object，在反序列化中处理会很麻烦
+            2，文本类型会占有比较大的数据空间
+            3，比较依赖JSON的解析包的兼容性和性能
+            4，序列化无论类型先转换为String ，转成byte[] 会增加内存的拷贝次数
+            5，反序列化的时候，必须将整个JSON反序列化对象后才能进行读取，java对象层次多的对象，占用的内存会远远大于数据本身
+    3，基于XML的序列化和反序列化
+            优点
+                1，无需关注对象的格式
+                2，可读性好
+            缺点
+                1，性能差
+                2，数据放大，占用内存大
+
+
 
 Hessian序列化
         hessian序列化比Java序列化高效的多，字节流也要短的多，支持的没有Java的序列化全面，Java序列化将类的元数据和业务数据全部序列化，整个继承关系也全部序列化，包含所有信息

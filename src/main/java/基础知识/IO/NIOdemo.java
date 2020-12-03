@@ -8,8 +8,8 @@ import java.nio.channels.FileChannel;
 
 public class NIOdemo
 {
-    public static void main(String[] args){
-
+    public static void main(String[] args) throws IOException {
+        fastcopy("G:\\demo2.txt","G:\\demo3.txt");
     }
 
     public static void fastcopy(String src,String dist) throws IOException {
@@ -21,7 +21,7 @@ public class NIOdemo
         //获取输出字节流
         FileOutputStream fileOutputStream = new FileOutputStream(dist);
         //获取输出字节流的通道
-        FileChannel fcout = fileInputStream.getChannel();
+        FileChannel fcout = fileOutputStream.getChannel();
 
         //为缓冲区分配1024字节
         ByteBuffer byteBuffer = ByteBuffer.allocateDirect(1024);

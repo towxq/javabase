@@ -90,17 +90,52 @@ public class IODemo {
 //                 outputStream.write(bytes,0,len);
 //             }
 //             inputStream1.close();
-//             outputStream.close();
-             BufferedReader bufferedReader =new BufferedReader(new InputStreamReader(System.in));
-             String s = null;
-             s = bufferedReader.readLine();
-             while (s!=null){
-                 if (s.equalsIgnoreCase("exit")) break;
-                 System.out.println(s.toUpperCase());
-                 s = bufferedReader.readLine();
+////             outputStream.close();
+//             BufferedReader bufferedReader =new BufferedReader(new InputStreamReader(System.in));
+//             String s = null;
+//             s = bufferedReader.readLine();
+//             while (s!=null){
+//                 if (s.equalsIgnoreCase("exit")) break;
+//                 System.out.println(s.toUpperCase());
+//                 s = bufferedReader.readLine();
+//             }
+//             bufferedReader.close();
+
+//            InputStream in  = new BufferedInputStream(new FileInputStream("G:\\test\\22.jpg"));
+//            OutputStream  out = new BufferedOutputStream(new FileOutputStream("G:\\33.jpg"));
+//            byte[] bytes = new byte[1024];
+//            int len = 0;
+//            while((len = in.read(bytes))!=-1){
+//                out.write(bytes,0,len);
+//            }
+//            out.close();
+//            in.close();
+
+//            BufferedReader in = new BufferedReader(new FileReader("G:\\demo.txt"));
+//            BufferedWriter out = new BufferedWriter(new FileWriter("G:\\demo1.txt"));
+//            String s = null;
+//            while((s=in.readLine())!=null){
+//                out.write(s);
+//                out.newLine();
+//            }
+//            out.close();
+//            in.close();
+
+            BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
+            BufferedWriter out = new BufferedWriter(new FileWriter("G:\\demo2.txt"));
+            String ss = null;
+            ss = input.readLine();
+            while (ss!=null){
+                 if (ss.equalsIgnoreCase("exit")) break;
+                 out.write(ss);
+                 out.newLine();
+                 ss = input.readLine();
              }
-             bufferedReader.close();
+            input.close();
+            out.close();
         }
+
+
 }
 
 

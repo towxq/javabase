@@ -1,0 +1,25 @@
+spring cloud
+    是基于spring boot实现的云应用的开发工具，它为基于JVM的云应用开发中涉及的配置管理，服务发现，断路器，智能路由，微代理，控制总线，全局锁，分布式回话
+    和集群状态管理等操作提供了一种简单的开发方式。
+    包含了多个子项目，spring cloud config,spring cloud Netflix,spring cloud AWS,spring cloud Security,spring cloud Zookeeper等
+
+    微服务架构
+        简单的说，微服务架构就是一个将完整的应用从数据存储开始垂直拆分成多个不同的服务，每个微服务能独立的部署，独立的维护，独立的扩展，服务之间通过RESTful API的方式互相调用
+
+    服务治理
+        spring cloud为服务治理做了一层抽象的接口，在spring cloud中可以支持不同的服务治理框架，eureka,zookeeper,consul,在spring cloud服务治理抽象层的作用下，我们可以
+        无缝的切换服务治理实现，并且不影响任何其他的服务注册，服务发现，服务调用等
+    Eureka
+        eureka是Netflix项目下的服务治理模块，它主要的模块包括：服务发现（Eureka）,断路器(Hystrix),智能路由（Zuul）,负载均衡（Ribbon）
+
+
+
+
+
+
+
+
+
+
+
+

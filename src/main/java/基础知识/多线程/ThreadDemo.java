@@ -67,6 +67,8 @@ public class ThreadDemo {
             }
         }).start();
     }
+
+
 }
 
 class Thread3 extends Thread{

@@ -1,8 +1,11 @@
 package 基础知识.多线程;
 
+import org.openjdk.jol.info.ClassLayout;
+
 public class SynchronizedDemo{
     public static void main(String[] args) {
         Number number = new Number();
+        System.out.println(ClassLayout.parseInstance(number).toPrintable());
         Thread t1 = new Thread(number);
         Thread t2 = new Thread(number);
         t1.start();
@@ -115,6 +118,7 @@ class Number implements Runnable{
 
 //        任意线程对Object的访问，首先要获得Object的监视器，如果没有获取到监视器的线程将会被阻塞在同步和同步方法的入口处果获取失败，该线程就进入同步状态，线程状态变为BLOCKED，当Object的监视器占有
 //        者释放后，在同步队列中得线程就会有机会重新获取该监视器
+
 
 //汇编层面 lock comxchg
 

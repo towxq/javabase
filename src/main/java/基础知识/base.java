@@ -1,7 +1,10 @@
 package 基础知识;
 
+import java.math.BigDecimal;
+
 public class base {
     public static void main(String[] args){
+        //double精度问题
         float af = 5.234556f;
         System.out.println(af);
         double a = 0.0;
@@ -20,6 +23,15 @@ public class base {
         double aa = 5.5;
         double bb  = 3.0;
         System.out.println(aa-bb);
+        double aac  = 0.1;
+        double aad  = 0.2;
+        BigDecimal bc = new BigDecimal("0.1");
+        BigDecimal bd = new BigDecimal("0.2");
+        BigDecimal bbc = new BigDecimal(0.1);
+        BigDecimal bbd = new BigDecimal(0.2);
+        System.out.println(aac+aad);
+        System.out.println(bc.add(bd));
+        System.out.println(bbc.add(bbd));
 
         for(SeasonEnum s: SeasonEnum.values()){
             System.out.println("-----"+s);
@@ -30,16 +42,16 @@ public class base {
         String ss = "wxq";
         String s1 = new String("wxq");
         String ss1 = new String("wxq");
-        System.out.println(s==ss);
-        System.out.println(s1==ss1);
+        System.out.println(s==ss);//true
+        System.out.println(s1==ss1);//false
 
         String as = "xiaomeng2";
         final String bs = "xiaomeng";
         String ds = "xiaomeng";
         String cs = bs + 2;
         String es = ds + 2;
-        System.out.println((as == cs));
-        System.out.println((as == es));
+        System.out.println((as == cs));//true
+        System.out.println((as == es));//false
 
         peo peo1 = new peo("abc",18);
         peo peo2 = new peo("wxq",27);
@@ -91,6 +103,10 @@ public class base {
             System.out.println("saasas");
         };
         functionalInterfaceDemo.ss();
+
+        System.out.println(Runtime.getRuntime().maxMemory()/1024/1024);
+        System.out.println(Runtime.getRuntime().totalMemory()/1024/1024);
+
 
 //        List<Integer> list = new ArrayList<Integer>();
 //        for (int n = 10;n<=206;n = n+2){

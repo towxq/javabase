@@ -67,6 +67,9 @@
     也被称为幽灵引用或者幻影引用，他是最弱的一种引用关系，一个对象是否有虚引用存在，完全不会对其生存时间构成影响，也无法通过虚引用来取得一个对象实例
     为一个对象设置虚引用关联的唯一目的就是能在这个对象被收集器回收时收到一个系列通知。
 
+    String str=new String("abc");                                     // 强引用
+    SoftReference<String> softRef=new SoftReference<String>(str);     // 软引用
+
 
 回收方法区
     Java虚拟机规范中确实说过可以不要求虚拟机在方法区实现垃圾回收，而且在方法区中进行垃圾回收，性价比很低，在堆中，尤其是在新生代中，常规应用进行一次垃圾收集可以回收70%-95%的空间
@@ -169,6 +172,12 @@ HotSpot的算法实现
         3，最终标记
         4，筛选回收
 
+JDK1.8默认Parallel Scavenge和Parallel old
+
+最快的是收费的C4 11开始ZGC  12是可以设置shenandoah
+G1（三色标记+SATB） 逻辑分代，物理不分代
+ZGC （ColoredPointers颜色指针）逻辑物理都不分代
+
     理解GC日志
         GC日志的开头的 时间代表GC发生的时间，含义是从Java虚拟机启动以来经过的秒数
         开头的 GC和 Full GC 说明了垃圾收集的停顿类型，而不是用来区分新生代GC和老年代GC的，如果有Full 代表这次GC发生了stop-the-world
@@ -265,11 +274,11 @@ hsdis jit生成代码反汇编
                 他负责加载用户路径（ClassPath）上所指定的类库，开发者可以直接使用这个类加载器，一般情况下这个就是程序中默认的类加载器
 
 
-                启动类加载器（Bootstrap ClassLoader）
+                启动类加载器（Bootstrap ClassLoader） %JAVA_HOME%/lib/ util.lang等
                             |
-                扩展类加载器（Extension ClassLoader）
+                扩展类加载器（Extension ClassLoader） %JAVA_HOME%/lib/ext目录
                             |
-                应用程序类加载器(Application ClassLoader)
+                应用程序类加载器(Application ClassLoader) 加载ClassPath也就是项目路径
                     /                       \
        自定义类加载器                     自定义类加载器
        User ClassLoader                    User ClassLoader
@@ -406,3 +415,17 @@ GC调优的目的
           统计YGC发生时晋升到老年代的平均总大小大于老年代的空闲空间
                 在发生YGC是会判断，是否安全，这里的安全指的是，当前老年代空间可以容纳YGC晋升的对象的平均大小，如果不安全，就不会执行YGC,转而执行Full GC。
           显示调用System.gc
+
+jps 定位java进程
+jstack 定位线程状况 重点WAITING BLOCKED
+jinfo pid 虚拟机信息
+jstat -gc
+jmap -histo pid | head 20
+
+arthas
+    curl -O https://arthas.aliyun.com/arthas-boot.jar
+    java -jar arthas-boot.jar
+     jmap -histo pid | head -20
+     jmap会时堆暂停线程
+
+    dashboard

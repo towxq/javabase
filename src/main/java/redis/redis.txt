@@ -1,22 +1,21 @@
 Redis
-    ubuntu安装redis
-        sudo apt-get update
-        sudo apt-get install redis-server
-
-        启动redis
-        redis -server
-
-        查看redis是否启动
-        redis-cli
-
-        redis 127.0.0.1:6379>ping
-        PONG
-
     Redis支持的五种数据类型
          string(字符串)  二进制安全的，可以包含任何数据，最大512M,字符串可以存储字节串，整数，浮点数
             get  keyname  value
             set  keyname
             del  keyname
+            strlen keyname
+            incr 自增1
+            decr 自减1
+            incrby key 5 设置步长
+            getrange wxq 0 3 获取字符串指定的长度
+            mset k1 v1 k2 v2
+            setex key 10 "sad" 10秒后过期
+            setnx key value 不存在就设置 （分布式锁用到）
+            getset k3 lllll  不存在返回空 ，存在值，获取原来值，设置新值
+
+
+
 
 
          hash(哈希)   hash是一个键值的集合 每个哈希可以存储40多亿的键值对
@@ -39,9 +38,11 @@ Redis
                 lindex list-key-name 1
             lpop 从列表的左端弹出一个值，并放回被弹出的值
                 lpop list-key-name
+                rpop list-key-name 右边移除
+                llen list-key-name 长度
 
 
-         set(基础知识.集合)   string类型的无序集合 集合可以通过哈希表实现
+         set(集合)   string类型的无序集合 集合可以通过哈希表实现
             sadd 将给定的元素添加到集合
                 sadd set-key value
             smembers 返回集合包含的所有元素
@@ -85,6 +86,11 @@ Redis
         2，只追加文件
             AOF持久化会将执行的命令写到AOF文件的末尾，来记录变化。
 
+
+        save的规则满足的条件下，会自动触发rdb规则 save 60 5 （60s内五次操作）
+        flushall，触发rdb
+        退出Redis 也会产生rdb文件
+
 分布式锁
     Redis使用WATCH命令来代替对数据进行加锁，因为WATCH命令只会在数据被其他客户端抢先修改的情况下通知执行了这个命令的客户端，
     而不会阻止其他客户端对数据进行修改，所以这个命令称为乐观锁
@@ -115,7 +121,7 @@ Redis
                                                                           3. 存在线程池阻塞的风险
 
 
-   “提前”使用互斥锁	                1. 保证一致性	                       同上 
+   “提前”使用互斥锁	                1. 保证一致性	                       同上  
 
 
     不过期(本文)                     1. 异步构建缓存，不会阻塞线程池           1. 不保证一致性。
@@ -182,4 +188,18 @@ redis的集群架构   读写分离   主从复制   水平扩容
 redis的优势
     1，高度写  redis的读的速度 为 100000 次/s  写 80000次/s
     2，redis的所有的操作都是原子性的，单个操作是原子性的，多个操作可以通过MULTI和EXEC指令抱起来
+
+Linux安装Redis
+1，下载
+2，tar -zxvf
+3,安装依赖 yum install gcc-c++
+4，make   make install
+
+cp /opt/redis-6.0.7/redis.conf  /home/wxq/redis/
+
+redis-server redis.conf
+redis-cli -p 6379
+
+测试
+redis-benchmark -h localhost -p 6379 -c 100 -n 100000
 

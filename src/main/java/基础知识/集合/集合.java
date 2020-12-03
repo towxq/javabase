@@ -1,6 +1,7 @@
 package 基础知识.集合;
 
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class 集合 {
 
@@ -38,6 +39,10 @@ public class 集合 {
         hashMap.put("sadsad","adasd");
         hashMap.put("ss","sdsdas");
         System.out.println(hashMap.get("ss"));
+
+        ConcurrentHashMap concurrentHashMap = new ConcurrentHashMap();
+        concurrentHashMap.put("asd","asd");
+
     }
 
 }

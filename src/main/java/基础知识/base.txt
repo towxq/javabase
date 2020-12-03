@@ -24,9 +24,9 @@ java是纯粹面向对象的语言，面向对象的特征
 java语言支持 基本变量和引用变量
 基本变量：byte,short,int,long,char,float,double,boolean 8个
 
-          byte  1字节  8位
-          short 2字节  16位
-          int   4字节  32位
+          byte  1字节  8位   -128 ~ 127
+          short 2字节  16位  -32 768 ~ 32 767
+          int   4字节  32位  -2 147 483 648 ~ 2 147 483 647
           long  8字节  64位
           char  2字节  16位
           float 4字节  32位
