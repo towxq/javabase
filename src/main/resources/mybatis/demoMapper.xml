@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mybatis.demoMapper">
+
+
+
+    <resultMap id="bloguser" type="mybatis.blog">
+        <id column="blog_id" property="id" jdbcType="INTEGER"/>
+        <result column="blog" property="blog" jdbcType="VARCHAR"/>
+        <association property="author" javaType="mybatis.Author" >
+            <id column="author_id" property="id"/>
+            <result column="author" property="author"/>
+        </association>
+    </resultMap>
+
+    <select id="selectBlogAuthor" resultMap="bloguser" parameterType="java.lang.Integer">
+        SELECT
+        a.id AS blog_id,
+        a.name AS blog,
+        b.id AS author_id,
+        b.author AS author
+        FROM demo_blog a
+        INNER JOIN demo_author b
+        INNER JOIN demo_author_blog ab
+        ON a.id = ab.blog_id
+        AND b.id = ab.author_id
+        WHERE ab.blog_id = #{id}
+    </select>
+
+    <resultMap id="authorblogs" type="mybatis.Author">
+        <id column="author_id" property="id" jdbcType="INTEGER"/>
+        <result column="author" property="author" jdbcType="VARCHAR"/>
+        <collection property="blogs" ofType="mybatis.blog" >
+            <id column="blog_id" property="id"/>
+            <result column="blog" property="blog"/>
+        </collection>
+    </resultMap>
+
+    <select id="selectAuthorBlogs" resultMap="authorblogs" parameterType="java.lang.Integer">
+        SELECT
+        a.id AS blog_id,
+        a.name AS blog,
+        b.id AS author_id,
+        b.author AS author
+        FROM demo_blog a
+        INNER JOIN demo_author b
+        INNER JOIN demo_author_blog ab
+        ON a.id = ab.blog_id
+        AND b.id = ab.author_id
+        WHERE ab.author_id = #{id}
+    </select>
+
+
+    <resultMap id="commentsuser" type="mybatis.Comment">
+        <id column="comment_id" property="id" jdbcType="INTEGER"/>
+        <result column="comment" property="comment" jdbcType="VARCHAR"/>
+        <association property="user"  javaType="mybatis.User">
+            <id column="user_id" property="id"/>
+            <result column="user" property="user"/>
+        </association>
+    </resultMap>
+
+    <select id="selectUserComment" resultMap="commentsuser" parameterType="java.util.List">
+        Select
+        a.id AS user_id,
+        a.user AS user,
+        b.id AS comment_id,
+        b.comment AS comment
+        FROM demo_user a
+        INNER JOIN demo_comment b
+        INNER JOIN demo_user_comment ab
+        ON a.id = ab.user_id
+        AND b.id = ab.comment_id
+        WHERE ab.comment_id IN
+        <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+
+    <resultMap id="blogcomment" type="mybatis.blog">
+        <id column="blog_id" property="id" jdbcType="INTEGER"/>
+        <result column="blogname" property="blog" jdbcType="VARCHAR"/>
+        <collection property="comments" ofType="mybatis.Comment" >
+            <id column="comment_id" property="id"/>
+            <result column="comment" property="comment"/>
+        </collection>
+    </resultMap>
+
+
+    <select id="selectBlogComment" resultMap="blogcomment" parameterType="java.util.List">
+        SELECT
+        a.id AS blog_id,
+        a.name AS blogname,
+        b.id AS comment_id,
+        b.comment AS comment
+        FROM demo_blog a
+        INNER JOIN demo_comment b
+        INNER JOIN demo_blog_comment ab
+        ON a.id = ab.blog_id
+        AND b.id = ab.comment_id
+        WHERE ab.blog_id IN
+        <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+        #{item}
+        </foreach>
+    </select>
+
+</mapper>
