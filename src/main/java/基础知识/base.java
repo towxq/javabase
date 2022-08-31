@@ -25,6 +25,10 @@ public class base {
         System.out.println(aa-bb);
         double aac  = 0.1;
         double aad  = 0.2;
+        float aaaaasd = 12.1112313123123123f;
+        double aaaaasd1 = 12.1112313123123123;
+        System.out.println(aaaaasd);
+        System.out.println(aaaaasd1);
         BigDecimal bc = new BigDecimal("0.1");
         BigDecimal bd = new BigDecimal("0.2");
         BigDecimal bbc = new BigDecimal(0.1);

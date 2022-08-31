@@ -1,6 +1,5 @@
 package 基础知识.多线程;
 
-import sun.awt.windows.ThemeReader;
 
 public class VolatileDemo {
         volatile int inc = 0;

@@ -18,7 +18,7 @@ public class 反转链表 {
         c.next = d;
         d.next = e;
         printList(a);
-        ListNode f = ReverseList(a);
+        ListNode f = reverseList(a);
         printList(f);
     }
 
@@ -48,7 +48,7 @@ public class 反转链表 {
         return pre;
     }
 
-    public ListNode reverseList(ListNode head) {
+    public static ListNode reverseList(ListNode head) {
         //1. 递归头  终止递归条件
         if(head == null || head.next == null) return head;
         //2. 递归体  自顶向下深入
